@@ -1,0 +1,9 @@
+cff-version: 1.2.0
+title: "IPIT"
+message: "If you use this project, please cite it using this file."
+type: software
+authors:
+  - family-names: "Pereira"
+    given-names: "Sandra Maria"
+repository-code: "https://github.com/smp-sandramariapereira/IPIT"
+license: MIT
