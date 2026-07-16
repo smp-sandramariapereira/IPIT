@@ -1,109 +1,244 @@
 ---
 name: planejar-arquitetura
 description: >
-  Planejar a arquitetura tecnico-pedagogica do MVP antes da implementacao,
-  garantindo escopo viavel, seguranca, privacidade e evidencias de aprendizagem.
-  Use when o diagnostico e a orquestracao inicial ja foram concluidos e a equipe
-  precisa definir estrutura de solucao e plano de execucao.
+  Planejar a arquitetura tecnico-pedagogica do MVP com componentes, fluxos,
+  backlog, testes, riscos e checkpoints de revisao humana. Use when o escopo do
+  MVP ja foi definido e a equipe precisa organizar a implementacao de forma
+  segura, simples e verificavel.
 metadata:
   author: Sandra Maria Pereira
   methodology: IPIT
-  version: 1.0.0
+  version: 1.1.0
   mcp-server: none
   personas:
     - professor
-    - equipe-estudantil
-  ipit-stage: planejamento
+    - estudante
+    - equipe-pedagogica
+    - apoio-tecnico
+  ipit-stage: arquitetura
   requires-human-review: true
   depends-on:
-    - orquestrar-ipit
+    - definir-mvp
   required-evidence:
-    - problema priorizado e delimitado
-    - requisitos funcionais minimos
-    - criterios de seguranca e privacidade
-    - plano de testes inicial
-    - plano de registro de evidencias
+    - objetivo-do-mvp
+    - escopo-mvp
+    - criterios-de-aceite
+    - plano-de-validacao
+    - stack-selecionada
+    - mapa-de-riscos-tecnicos
   produces:
     - arquitetura-mvp
+    - diagrama-de-componentes
     - backlog-priorizado
     - plano-de-execucao
+    - plano-de-testes
     - matriz-de-riscos
-    - criterios-de-validacao
+    - checkpoints-de-revisao
 license: repository-license
 compatibility: GitHub Copilot, Codex e agentes compativeis com Markdown
 ---
 
+# Skill: planejar-arquitetura
+
+## Purpose - Finalidade
+
+Transformar o escopo validado do MVP em um plano tecnico-pedagogico executavel,
+com componentes claros, dependencias controladas, entregas incrementais, testes,
+riscos e momentos obrigatorios de revisao humana.
+
+## Use When - Quando usar
+
+Use esta skill quando:
+
+- o MVP ja tiver objetivo, escopo e criterios de aceite definidos;
+- a stack tecnologica ja tiver sido selecionada;
+- a equipe precisar dividir a solucao em componentes e incrementos;
+- for necessario planejar testes, seguranca, privacidade e acessibilidade;
+- houver necessidade de organizar responsabilidades e checkpoints.
+
+Trigger phrases:
+
+- "vamos planejar a arquitetura";
+- "como dividir o MVP em componentes?";
+- "precisamos montar o backlog tecnico";
+- "como organizar a implementacao?";
+- "quais testes entram antes do desenvolvimento?".
+
 ## Instructions - Instrucoes
 
-- Declarar a skill utilizada: `planejar-arquitetura`.
-- Confirmar dependencia: executar apenas apos `orquestrar-ipit`.
-- Definir escopo minimo viavel do MVP com problema, usuarios e fluxo principal.
-- Especificar componentes tecnicos necessarios sem excesso de complexidade.
-- Registrar premissas, restricoes e alternativas consideradas.
-- Definir backlog inicial com prioridades e entregas incrementais.
-- Incluir criterios de seguranca e privacidade desde o desenho da solucao.
-- Planejar testes minimos para validar fluxo principal e riscos criticos.
-- Prever checkpoints de revisao docente e da equipe pedagogica.
-- Registrar evidencias esperadas por etapa para avaliacao processual.
-- Evitar dependencia de dados pessoais reais; priorizar dados ficticios ou anonimizados.
-- Declarar limites do MVP e riscos nao resolvidos.
+1. Declarar a skill utilizada: `planejar-arquitetura`.
+2. Confirmar que `definir-mvp` foi concluida e que as evidencias obrigatorias existem.
+3. Reafirmar objetivo, fluxo principal e limites do MVP sem ampliar o escopo.
+4. Identificar componentes, integracoes, dados, atores e dependencias tecnicas.
+5. Elaborar um diagrama textual ou visual simples da arquitetura.
+6. Dividir o trabalho em incrementos pequenos, testaveis e pedagogicamente acompanhaveis.
+7. Criar backlog priorizado com criterios de aceite e evidencias esperadas.
+8. Planejar testes do fluxo principal, acessibilidade, seguranca e tratamento de dados.
+9. Mapear riscos tecnicos, pedagogicos, institucionais e de privacidade.
+10. Definir checkpoints de revisao docente, pedagogica e tecnica.
+11. Registrar premissas, restricoes, decisoes adiadas e plano de mitigacao.
+12. Encerrar com proximo passo acionavel para `acompanhar-desenvolvimento`.
 
 ## Inputs - Entradas
 
-- Resultado do diagnostico inicial e da orquestracao (bloqueante).
-- Contexto da turma, infraestrutura e tempo disponivel (bloqueante).
-- Requisitos pedagogicos e institucionais (bloqueante).
-- Restricoes tecnicas e de acessibilidade (bloqueante).
-- Contexto BNCC/curriculo local/PPP (nao bloqueante, registrar "a validar pela equipe pedagogica" quando faltar confirmacao).
+### Obrigatorias
+
+- objetivo e escopo do MVP;
+- criterios de aceite;
+- plano de validacao;
+- stack selecionada e justificativa;
+- mapa de riscos tecnicos;
+- contexto de infraestrutura, tempo e equipe.
+
+### Opcionais
+
+- prototipo atualizado;
+- regras institucionais de hospedagem e acesso;
+- disponibilidade de apoio tecnico;
+- requisitos de integracao;
+- contexto BNCC, curriculo local e PPP.
+
+A ausencia de escopo, criterios de aceite ou stack selecionada e bloqueante.
 
 ## Outputs - Saidas
 
-- Desenho da arquitetura do MVP com fluxo principal definido.
-- Backlog priorizado por incremento.
-- Plano de execucao com checkpoints de revisao humana.
-- Plano de testes iniciais e criterios de aceitacao.
-- Matriz de riscos tecnicos, pedagogicos e de dados.
-- Evidencias minimas:
-  - arquitetura-mvp;
-  - backlog-priorizado;
-  - plano-de-execucao;
-  - criterios-de-validacao.
+A skill deve produzir:
+
+- arquitetura do MVP;
+- diagrama de componentes e fluxo de dados;
+- backlog priorizado por incremento;
+- plano de execucao com responsabilidades;
+- plano de testes;
+- matriz de riscos e mitigacoes;
+- checkpoints de revisao humana;
+- proximo passo para desenvolvimento.
+
+Formato minimo recomendado:
+
+```yaml
+arquitetura_mvp:
+  componentes: []
+  integracoes: []
+  dados: []
+backlog:
+  - incremento: 1
+    entrega: ""
+    criterio_de_aceite: ""
+    evidencia: ""
+plano_de_testes: []
+riscos: []
+checkpoints_de_revisao: []
+proximo_passo: acompanhar-desenvolvimento
+```
+
+## Dependencies - Dependencias
+
+Esta skill depende de:
+
+1. `skills/definir-mvp/SKILL.md`;
+2. evidencias produzidas por `selecionar-tecnologia`;
+3. guardrails definidos em `guardrails/policy.yaml`.
+
+Nao deve retroceder silenciosamente para redefinir o MVP. Mudancas de escopo devem
+ser encaminhadas novamente para `definir-mvp`.
 
 ## BNCC Alignment - Alinhamento a BNCC
 
 - Nao inventar codigos BNCC.
 - Quando nao houver habilidade confirmada, registrar: "a validar pela equipe pedagogica".
-- Relacionar planejamento ao curriculo local, PPP e avaliacao processual.
+- Relacionar checkpoints e evidencias de aprendizagem ao curriculo local e ao PPP quando aplicavel.
+- Decisoes curriculares exigem validacao da equipe pedagogica.
 
 ## Safety and Pedagogy - Seguranca e pedagogia
 
-- Nao coletar nem planejar uso de dados pessoais desnecessarios.
-- Nao incluir credenciais, tokens ou segredos em exemplos de arquitetura.
-- Garantir supervisao docente para decisoes pedagogicas e de risco.
-- Prever acessibilidade e inclusao como requisito de arquitetura.
-- Registrar limites eticos do uso de IA no MVP.
+- Nao incluir dados pessoais reais, credenciais, tokens ou segredos na arquitetura.
+- Aplicar minimizacao de dados e preferir dados ficticios ou anonimizados.
+- Prever controle de acesso apenas quando houver necessidade real.
+- Nao automatizar decisoes pedagogicas, avaliativas ou institucionais.
+- Manter acessibilidade e inclusao como requisitos de arquitetura.
+- Registrar limites e riscos do uso de IA.
+- Nao executar codigo ou provisionar infraestrutura nesta skill.
+- Preservar autoria estudantil e autoria metodologica.
+
+## Human Review - Revisao humana
+
+Revisao obrigatoria por:
+
+- professor, para coerencia pedagogica e avaliacao processual;
+- equipe pedagogica, para curriculo, PPP e impacto institucional;
+- apoio tecnico, quando houver integracoes, autenticacao, hospedagem ou dados;
+- gestao, quando houver custo, publicacao externa ou tratamento de dados de estudantes.
+
+A revisao deve registrar responsavel, data, criterio e pendencias.
+
+## Completion Criteria - Criterios de conclusao
+
+A skill esta concluida quando:
+
+- os componentes e fluxos estiverem documentados;
+- o backlog estiver priorizado em incrementos testaveis;
+- cada incremento tiver criterio de aceite e evidencia esperada;
+- o plano de testes cobrir fluxo principal e riscos criticos;
+- riscos e mitigacoes estiverem registrados;
+- checkpoints de revisao humana estiverem definidos;
+- o proximo passo para desenvolvimento estiver claro.
 
 ## Examples - Exemplos
 
-- Exemplo de saida: "Arquitetura aprovada com fluxo de cadastro anonimo, backlog em 4 incrementos, 8 testes planejados e checklist de privacidade validado pela equipe docente."
+### Caso adequado
+
+A equipe possui MVP de formulario anonimo, stack simples e criterios de aceite. A
+skill produz arquitetura com frontend, armazenamento sem identificacao pessoal,
+backlog em tres incrementos, testes de acessibilidade e checkpoint docente.
+
+### Caso ambiguo
+
+A equipe ainda discute quais funcionalidades pertencem ao MVP. Interromper a
+arquitetura e retornar para `definir-mvp`.
+
+### Caso bloqueante
+
+A proposta exige armazenar nomes e telefones de estudantes sem justificativa ou
+aprovacao. Bloquear o desenho, aplicar minimizacao de dados e escalar para revisao
+institucional.
 
 ## Performance Notes - Notas de desempenho
 
-- Prioridade: viabilidade pedagogica -> seguranca/privacidade -> simplicidade tecnica -> testabilidade.
-- Se faltar entrada bloqueante, interromper e solicitar complementacao objetiva.
+- Priorizar simplicidade, testabilidade e manutencao.
+- Evitar diagramas excessivamente detalhados para um MVP escolar.
+- Reutilizar decisoes ja registradas e nao reabrir escolhas sem evidencia nova.
+- Dividir entregas para permitir acompanhamento e feedback frequente.
+- Fazer no maximo tres perguntas por rodada quando faltar contexto.
 
 ## Troubleshooting - Solucao de problemas
 
-- Erro bloqueante: ausencia de orquestracao previa, escopo indefinido, sem plano de testes ou sem revisao humana prevista.
-- Aviso nao bloqueante: backlog incompleto, riscos sem mitigacao detalhada, mapeamento BNCC pendente.
-- Em risco alto institucional ou de dados, escalar para equipe pedagogica/gestao.
+### Escopo ainda instavel
 
-## Criterios de conclusao
+Retornar para `definir-mvp` antes de prosseguir.
 
-A skill conclui quando houver arquitetura do MVP validada para o contexto, backlog priorizado, plano de execucao com checkpoints, plano de testes iniciais, riscos principais mapeados e registro de revisao humana.
+### Stack incompatível com a infraestrutura
 
-## Politica de atualizacao
+Retornar para `selecionar-tecnologia` e registrar a restricao descoberta.
+
+### Arquitetura complexa demais
+
+Remover componentes sem relacao direta com o fluxo principal e os criterios de aceite.
+
+### Ausencia de plano de testes
+
+Nao concluir a skill. Definir testes minimos antes do desenvolvimento.
+
+### Risco alto de dados ou seguranca
+
+Bloquear a continuidade e escalar para apoio tecnico, equipe pedagogica e gestao.
+
+## Update Policy - Politica de atualizacao
 
 - PATCH: ajustes textuais sem mudanca de comportamento.
-- MINOR: nova evidencia ou regra compativel com o fluxo atual.
-- MAJOR: mudanca de dependencia, escopo ou criterio de conclusao.
+- MINOR: novo artefato ou criterio compativel com o fluxo atual.
+- MAJOR: alteracao de dependencia, contrato de saida ou criterio de conclusao.
+
+## Authorship - Autoria
+
+**Sandra Maria Pereira**  
+Criadora e autora do IPIT - Ideathon Pedagogico de Inovacao Tecnologica.
