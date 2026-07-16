@@ -7,7 +7,7 @@ description: >
 metadata:
   author: Sandra Maria Pereira
   methodology: IPIT
-  version: 1.1.0
+  version: 1.2.0
   mcp-server: none
   personas:
     - professor
@@ -19,7 +19,7 @@ metadata:
   depends-on:
     - acompanhar-desenvolvimento
   required-evidence:
-    - mvp-executavel-ou-demonstracao-tecnicamente-honesta
+    - mvp-executavel
     - evidencias-de-testes
     - limitacoes-conhecidas
     - registro-de-uso-de-ia
@@ -63,7 +63,7 @@ Trigger phrases:
 3. Identificar público, tempo disponível e critérios da apresentação.
 4. Estruturar a narrativa em problema, evidências, público afetado, solução, demonstração, resultados, limitações e próximos passos.
 5. Selecionar apenas evidências verificáveis.
-6. Preparar demonstração do fluxo principal do MVP ou alternativa tecnicamente honesta.
+6. Preparar demonstração do fluxo principal do MVP ou alternativa tecnicamente honesta quando a execução ao vivo não for viável.
 7. Explicar arquitetura e tecnologias em linguagem adequada ao público.
 8. Declarar uso de IA, validação humana e limites de confiança.
 9. Prever acessibilidade visual, textual e oral.
@@ -75,7 +75,7 @@ Trigger phrases:
 
 ### Obrigatórias
 
-- estado atual do MVP;
+- MVP executável e seu estado real;
 - evidências de testes e validação;
 - limitações conhecidas;
 - público da apresentação;
@@ -88,7 +88,7 @@ Trigger phrases:
 - contexto BNCC, currículo local e PPP;
 - autorização para uso de imagens e depoimentos.
 
-A ausência de evidências verificáveis ou de uma demonstração tecnicamente honesta é bloqueante.
+Quando a demonstração ao vivo não for viável, preparar uma alternativa tecnicamente honesta baseada no MVP e declarar explicitamente a limitação. A ausência de evidências verificáveis é bloqueante.
 
 ## Outputs — Saídas
 
@@ -162,7 +162,7 @@ A skill está concluída quando:
 
 ### Caso ambíguo
 
-Quando o MVP estiver parcialmente funcional, apresentar o fluxo concluído e demonstrar as demais partes com protótipo, deixando claro o que ainda não foi implementado.
+Quando o MVP estiver parcialmente funcional, apresentar somente o fluxo executável e usar protótipo, vídeo curto ou sequência de telas para contextualizar as partes pendentes, deixando claro o que ainda não foi implementado.
 
 ### Caso bloqueante
 
@@ -178,9 +178,9 @@ Não criar métricas, depoimentos, resultados ou funcionalidades inexistentes ap
 
 ## Troubleshooting — Solução de problemas
 
-### Ausência de demonstração
+### Ausência de demonstração ao vivo
 
-Preparar alternativa tecnicamente honesta com protótipo, vídeo curto ou sequência de telas, declarando a limitação.
+Preparar alternativa tecnicamente honesta com protótipo, vídeo curto ou sequência de telas, vinculada ao estado real do MVP e declarando a limitação.
 
 ### Falta de evidências
 
