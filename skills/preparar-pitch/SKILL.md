@@ -1,101 +1,206 @@
 ---
 name: preparar-pitch
 description: >
-  Preparar o pitch final do projeto IPIT com narrativa objetiva, demonstracao
-  tecnica honesta e evidencias de aprendizagem. Use when o desenvolvimento
-  do MVP ja foi acompanhado e a equipe vai apresentar resultados.
+  Preparar o pitch final do projeto IPIT com narrativa objetiva, demonstração
+  tecnicamente honesta e evidências de aprendizagem. Use when o desenvolvimento
+  do MVP estiver concluído ou suficientemente estável para apresentação.
 metadata:
   author: Sandra Maria Pereira
   methodology: IPIT
-  version: 1.0.0
+  version: 1.1.0
   mcp-server: none
   personas:
     - professor
-    - equipe-estudantil
+    - estudante
+    - equipe-pedagogica
+    - gestao
   ipit-stage: finalizacao
   requires-human-review: true
   depends-on:
     - acompanhar-desenvolvimento
   required-evidence:
-    - roteiro de apresentacao
-    - demonstracao funcional ou tecnicamente honesta
-    - README final atualizado
-    - retrospectiva do processo
+    - mvp-executavel-ou-demonstracao-tecnicamente-honesta
+    - evidencias-de-testes
+    - limitacoes-conhecidas
+    - registro-de-uso-de-ia
+    - documentacao-atualizada
   produces:
-    - roteiro
+    - roteiro-de-pitch
     - apresentacao
-    - demonstracao
-    - readme-final
+    - plano-de-demonstracao
+    - respostas-para-banca
     - retrospectiva
+    - proximos-passos
 license: repository-license
 compatibility: GitHub Copilot, Codex e agentes compativeis com Markdown
 ---
 
-## Instructions - Instrucoes
+# Preparar Pitch
 
-- Declarar a skill utilizada: `preparar-pitch`.
-- Confirmar dependencia: executar apenas apos `acompanhar-desenvolvimento`.
-- Estruturar o pitch com problema, evidencias, publico e proposta de valor.
-- Preparar demonstracao alinhada ao fluxo principal do MVP.
-- Apresentar arquitetura e tecnologias com linguagem adequada ao publico.
-- Mostrar resultados alcancados e limitacoes conhecidas.
-- Declarar uso de IA, com validacao humana e limites de confianca.
-- Fechar com proximos passos realistas e priorizados.
-- Garantir tempo total entre 3 e 5 minutos.
-- Incluir recursos de acessibilidade da apresentacao.
-- Preparar respostas para perguntas provaveis da banca.
+## Purpose — Finalidade
 
-## Inputs - Entradas
+Transformar as evidências do projeto em uma apresentação curta, clara e verificável, sem exagerar resultados, ocultar limitações ou substituir a autoria da equipe.
 
-- Evidencias do desenvolvimento e testes (bloqueante).
-- Estado atual do MVP e limitacoes (bloqueante).
-- Publico alvo do pitch (bloqueante).
-- Requisitos de banca e criterios institucionais (nao bloqueante).
-- Contexto BNCC/curriculo local/PPP (nao bloqueante, registrar "a validar pela equipe pedagogica" quando faltar confirmacao).
+## Use When — Quando usar
 
-## Outputs - Saidas
+Use esta skill quando:
 
-- Roteiro objetivo para pitch de 3 a 5 minutos.
-- Apresentacao com acessibilidade minima planejada.
-- Plano de demonstracao do MVP.
-- README final atualizado.
-- Retrospectiva com aprendizados, limites e continuidade.
+- o MVP estiver concluído ou estável para demonstração;
+- a equipe precisar apresentar problema, solução, processo e resultados;
+- houver banca, mostra, reunião pedagógica ou apresentação institucional.
 
-## BNCC Alignment - Alinhamento a BNCC
+Trigger phrases:
 
-- Nao inventar codigos BNCC.
-- Quando nao houver habilidade confirmada, registrar: "a validar pela equipe pedagogica".
-- Relacionar evidencias da apresentacao ao curriculo local, PPP e avaliacao processual.
+- "precisamos montar o pitch";
+- "vamos apresentar o projeto";
+- "como demonstrar o MVP";
+- "prepare a apresentação final".
 
-## Safety and Pedagogy - Seguranca e pedagogia
+## Instructions — Instruções
 
-- Nao expor dados pessoais, credenciais ou segredos na apresentacao.
-- Usar dados ficticios ou anonimizados na demonstracao.
-- Evitar promessas tecnicas sem evidencia.
-- Manter linguagem inclusiva, acessivel e pedagogicamente responsavel.
-- Garantir supervisao docente antes da apresentacao final.
+1. Declarar a skill utilizada: `preparar-pitch`.
+2. Confirmar a conclusão de `acompanhar-desenvolvimento`.
+3. Identificar público, tempo disponível e critérios da apresentação.
+4. Estruturar a narrativa em problema, evidências, público afetado, solução, demonstração, resultados, limitações e próximos passos.
+5. Selecionar apenas evidências verificáveis.
+6. Preparar demonstração do fluxo principal do MVP ou alternativa tecnicamente honesta.
+7. Explicar arquitetura e tecnologias em linguagem adequada ao público.
+8. Declarar uso de IA, validação humana e limites de confiança.
+9. Prever acessibilidade visual, textual e oral.
+10. Preparar respostas para perguntas prováveis da banca.
+11. Ensaiar e ajustar a duração para 3 a 5 minutos, salvo regra institucional diferente.
+12. Encerrar com próximo passo realista e responsável definido.
 
-## Examples - Exemplos
+## Inputs — Entradas
 
-- Exemplo de fechamento: "Entregamos um MVP funcional para o fluxo principal, com 12 testes executados, duas limitacoes conhecidas e plano de continuidade em tres frentes."
+### Obrigatórias
 
-## Performance Notes - Notas de desempenho
+- estado atual do MVP;
+- evidências de testes e validação;
+- limitações conhecidas;
+- público da apresentação;
+- tempo disponível.
 
-- Prioridade: clareza do problema -> prova de valor -> demonstracao -> resultados e limites -> proximos passos.
-- Se o tempo ultrapassar 5 minutos, reduzir detalhes secundarios e preservar evidencias centrais.
+### Opcionais
 
-## Troubleshooting - Solucao de problemas
+- critérios da banca;
+- identidade visual institucional;
+- contexto BNCC, currículo local e PPP;
+- autorização para uso de imagens e depoimentos.
 
-- Erro bloqueante: ausencia de demonstracao, falta de evidencia de resultados, dependencia nao cumprida.
-- Aviso nao bloqueante: roteiro longo, acessibilidade parcial, respostas de banca pouco objetivas.
-- Em risco pedagogico ou etico, pausar e revisar com equipe docente.
+A ausência de evidências verificáveis ou de uma demonstração tecnicamente honesta é bloqueante.
 
-## Criterios de conclusao
+## Outputs — Saídas
 
-A skill conclui quando houver roteiro, apresentacao e demonstracao prontos, com problema/evidencias/publico/proposta de valor claros, arquitetura e tecnologias explicadas, resultados e limitacoes documentados, uso de IA registrado, tempo entre 3 e 5 minutos, acessibilidade prevista, perguntas de banca preparadas, README final atualizado e retrospectiva entregue.
+A skill deve produzir:
 
-## Politica de atualizacao
+- roteiro de pitch;
+- estrutura de apresentação;
+- plano de demonstração;
+- lista de evidências utilizadas;
+- respostas para perguntas prováveis;
+- retrospectiva do processo;
+- limitações declaradas;
+- próximos passos priorizados.
 
-- PATCH: ajustes textuais sem mudanca de comportamento.
-- MINOR: novo requisito de apresentacao compativel com a estrutura atual.
-- MAJOR: alteracao de dependencia, formato do pitch ou criterio de conclusao.
+## Dependencies — Dependências
+
+Esta skill depende de:
+
+- `skills/acompanhar-desenvolvimento/SKILL.md`.
+
+Não avançar sem evidências do desenvolvimento e estado real do MVP.
+
+## BNCC Alignment — Alinhamento à BNCC
+
+- Não inventar códigos BNCC.
+- Quando não houver habilidade confirmada, registrar: `a validar pela equipe pedagogica`.
+- Relacionar evidências da apresentação ao currículo local, ao PPP e à avaliação processual quando aplicável.
+- Não apresentar alinhamento curricular como definitivo sem validação humana registrada.
+
+## Safety and Pedagogy — Segurança e pedagogia
+
+- Não expor dados pessoais, imagens não autorizadas, credenciais ou segredos.
+- Usar dados fictícios, anonimizados ou agregados na demonstração.
+- Não prometer funcionalidades, impactos ou resultados sem evidência.
+- Preservar autoria estudantil e autoria metodológica de Sandra Maria Pereira.
+- Não permitir que IA produza ou apresente evidências inexistentes.
+- Aplicar `guardrails/policy.yaml` em toda entrada e saída.
+- Garantir linguagem inclusiva e recursos de acessibilidade.
+
+## Human Review — Revisão humana
+
+Revisão obrigatória por professor e, quando houver impacto institucional, pela equipe pedagógica ou gestão.
+
+A revisão deve confirmar:
+
+- fidelidade das evidências;
+- ausência de dados sensíveis;
+- autoria e créditos;
+- adequação curricular;
+- acessibilidade;
+- coerência entre demonstração e estado real do MVP.
+
+## Completion Criteria — Critérios de conclusão
+
+A skill está concluída quando:
+
+- o roteiro estiver estruturado;
+- a apresentação estiver adequada ao público e ao tempo;
+- a demonstração estiver preparada;
+- resultados e limitações estiverem documentados;
+- o uso de IA estiver declarado;
+- perguntas prováveis tiverem respostas preparadas;
+- acessibilidade e revisão humana estiverem registradas;
+- próximos passos estiverem definidos.
+
+## Examples — Exemplos
+
+### Caso adequado
+
+"O MVP executa o fluxo principal, possui 12 testes registrados, duas limitações conhecidas e plano de continuidade em três frentes."
+
+### Caso ambíguo
+
+Quando o MVP estiver parcialmente funcional, apresentar o fluxo concluído e demonstrar as demais partes com protótipo, deixando claro o que ainda não foi implementado.
+
+### Caso bloqueante
+
+Não criar métricas, depoimentos, resultados ou funcionalidades inexistentes apenas para fortalecer a apresentação.
+
+## Performance Notes — Notas de desempenho
+
+- Priorizar problema, evidência, demonstração, resultados, limites e próximos passos.
+- Evitar excesso de texto nos slides.
+- Usar uma evidência principal por afirmação relevante.
+- Reduzir detalhes secundários quando o tempo exceder o limite.
+- Não repetir toda a documentação técnica durante o pitch.
+
+## Troubleshooting — Solução de problemas
+
+### Ausência de demonstração
+
+Preparar alternativa tecnicamente honesta com protótipo, vídeo curto ou sequência de telas, declarando a limitação.
+
+### Falta de evidências
+
+Interromper a finalização e retornar para `acompanhar-desenvolvimento`.
+
+### Roteiro muito longo
+
+Remover detalhes secundários e preservar problema, evidências, demonstração, resultados e limitações.
+
+### Dados ou imagens sem autorização
+
+Bloquear o uso e substituir por conteúdo fictício, anonimizado ou autorizado.
+
+## Política de atualização
+
+- PATCH: ajustes textuais sem mudança de comportamento.
+- MINOR: novo requisito de apresentação compatível com o fluxo atual.
+- MAJOR: alteração de dependência, formato obrigatório ou critério de conclusão.
+
+## Authorship — Autoria
+
+**Sandra Maria Pereira**  
+Criadora e autora do IPIT — Ideathon Pedagógico de Inovação Tecnológica.
