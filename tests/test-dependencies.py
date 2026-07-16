@@ -1,69 +1,78 @@
 import re
+from collections import Counter, deque
 from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
 SKILLS_DIR = ROOT / "skills"
 CATALOG_PATH = SKILLS_DIR / "catalog.yaml"
+EXPECTED_ROOT = "identificar-persona"
 
 
 def available_skill_names():
     return {path.parent.name for path in SKILLS_DIR.glob("*/SKILL.md")}
 
 
-def parse_catalog_dependencies():
+def parse_catalog_entries():
     content = CATALOG_PATH.read_text(encoding="utf-8").splitlines()
-    dependencies = {}
-    current_skill = None
+    entries = []
+    current = None
     in_dep_block = False
 
     for line in content:
         name_match = re.match(r"^  - name:\s*(\S+)\s*$", line)
         if name_match:
-            current_skill = name_match.group(1)
-            dependencies[current_skill] = []
+            current = {"name": name_match.group(1), "path": None, "depends_on": []}
+            entries.append(current)
             in_dep_block = False
             continue
 
-        if current_skill is None:
+        if current is None:
+            continue
+
+        path_match = re.match(r"^\s{4}path:\s*(\S+)\s*$", line)
+        if path_match:
+            current["path"] = path_match.group(1)
+            in_dep_block = False
             continue
 
         if re.match(r"^\s{4}depends_on:\s*\[\]\s*$", line):
-            dependencies[current_skill] = []
+            current["depends_on"] = []
             in_dep_block = False
             continue
 
         if re.match(r"^\s{4}depends_on:\s*$", line):
+            current["depends_on"] = []
             in_dep_block = True
-            dependencies[current_skill] = []
             continue
 
         if in_dep_block:
             dep_match = re.match(r"^\s{6}-\s*(\S+)\s*$", line)
             if dep_match:
-                dependencies[current_skill].append(dep_match.group(1))
+                current["depends_on"].append(dep_match.group(1))
                 continue
-
-            # End of dependency block when list indentation stops.
             in_dep_block = False
 
-    return dependencies
+    return entries
+
+
+def catalog_graph():
+    return {entry["name"]: list(entry["depends_on"]) for entry in parse_catalog_entries()}
 
 
 def extract_frontmatter(content):
-    match = re.match(r"^---\n(.*?)\n---\n", content, flags=re.DOTALL)
+    normalized = content.replace("\r\n", "\n")
+    match = re.match(r"^---\n(.*?)\n---(?:\n|$)", normalized, flags=re.DOTALL)
     assert match, "Frontmatter YAML ausente"
     return match.group(1)
 
 
 def parse_frontmatter_dependencies(skill_file: Path):
     frontmatter = extract_frontmatter(skill_file.read_text(encoding="utf-8"))
-    lines = frontmatter.splitlines()
-
     deps = []
     in_dep_block = False
 
-    for line in lines:
+    for line in frontmatter.splitlines():
         if re.match(r"^\s*depends-on:\s*\[\]\s*$", line):
             return []
 
@@ -84,42 +93,158 @@ def parse_frontmatter_dependencies(skill_file: Path):
     return deps
 
 
-def test_catalog_skills_exist_in_workspace():
-    valid_skills = available_skill_names()
-    catalog_deps = parse_catalog_dependencies()
-    for skill_name in catalog_deps:
-        assert skill_name in valid_skills, f"Skill declarada no catalogo nao existe: {skill_name}"
+def find_cycle(graph):
+    state = {name: 0 for name in graph}
+    stack = []
+
+    def visit(node):
+        state[node] = 1
+        stack.append(node)
+
+        for dependency in graph[node]:
+            if state[dependency] == 0:
+                cycle = visit(dependency)
+                if cycle:
+                    return cycle
+            elif state[dependency] == 1:
+                start = stack.index(dependency)
+                return stack[start:] + [dependency]
+
+        stack.pop()
+        state[node] = 2
+        return None
+
+    for node in graph:
+        if state[node] == 0:
+            cycle = visit(node)
+            if cycle:
+                return cycle
+
+    return None
 
 
-def test_catalog_dependency_targets_exist():
-    catalog_deps = parse_catalog_dependencies()
-    catalog_skills = set(catalog_deps.keys())
+def reachable_from_root(graph, root):
+    dependents = {name: [] for name in graph}
+    for skill, dependencies in graph.items():
+        for dependency in dependencies:
+            dependents[dependency].append(skill)
 
-    for skill_name, deps in catalog_deps.items():
-        for dep in deps:
-            assert dep in catalog_skills, f"Dependencia inexistente no catalogo: {skill_name} -> {dep}"
+    visited = set()
+    queue = deque([root])
+    while queue:
+        current = queue.popleft()
+        if current in visited:
+            continue
+        visited.add(current)
+        queue.extend(dependents[current])
+
+    return visited
 
 
-def test_skill_frontmatter_dependency_targets_exist():
+def test_catalog_has_no_duplicate_skill_names():
+    names = [entry["name"] for entry in parse_catalog_entries()]
+    duplicates = sorted(name for name, count in Counter(names).items() if count > 1)
+    assert not duplicates, f"Skills duplicadas no catalogo: {duplicates}"
+
+
+def test_catalog_and_workspace_have_same_skills():
+    workspace = available_skill_names()
+    catalog = set(catalog_graph())
+    assert workspace == catalog, (
+        f"Divergencia entre workspace e catalogo. "
+        f"somente_workspace={sorted(workspace - catalog)} "
+        f"somente_catalogo={sorted(catalog - workspace)}"
+    )
+
+
+def test_catalog_paths_are_unique_and_valid():
+    entries = parse_catalog_entries()
+    paths = [entry["path"] for entry in entries]
+    duplicates = sorted(path for path, count in Counter(paths).items() if count > 1)
+    assert None not in paths, "Skill sem path declarado no catalogo"
+    assert not duplicates, f"Paths duplicados no catalogo: {duplicates}"
+
+    for entry in entries:
+        expected = f"skills/{entry['name']}/SKILL.md"
+        assert entry["path"] == expected, (
+            f"Path inconsistente para {entry['name']}: "
+            f"declarado={entry['path']} esperado={expected}"
+        )
+        assert (ROOT / entry["path"]).is_file(), f"Arquivo ausente: {entry['path']}"
+
+
+def test_dependency_targets_exist():
+    graph = catalog_graph()
+    catalog_skills = set(graph)
+
+    for skill_name, dependencies in graph.items():
+        for dependency in dependencies:
+            assert dependency in catalog_skills, (
+                f"Dependencia inexistente no catalogo: {skill_name} -> {dependency}"
+            )
+
+
+def test_dependencies_are_not_duplicated():
+    for skill_name, dependencies in catalog_graph().items():
+        duplicates = sorted(
+            dependency
+            for dependency, count in Counter(dependencies).items()
+            if count > 1
+        )
+        assert not duplicates, (
+            f"Dependencias duplicadas para {skill_name}: {duplicates}"
+        )
+
+
+def test_skills_do_not_depend_on_themselves():
+    for skill_name, dependencies in catalog_graph().items():
+        assert skill_name not in dependencies, f"Auto-dependencia: {skill_name}"
+
+
+def test_dependency_graph_is_acyclic():
+    graph = catalog_graph()
+    cycle = find_cycle(graph)
+    assert cycle is None, f"Ciclo de dependencias detectado: {' -> '.join(cycle)}"
+
+
+def test_graph_has_single_expected_root():
+    graph = catalog_graph()
+    roots = sorted(name for name, dependencies in graph.items() if not dependencies)
+    assert roots == [EXPECTED_ROOT], (
+        f"Raizes inesperadas no grafo: {roots}; esperada={[EXPECTED_ROOT]}"
+    )
+
+
+def test_all_skills_are_reachable_from_root():
+    graph = catalog_graph()
+    assert EXPECTED_ROOT in graph, f"Raiz ausente: {EXPECTED_ROOT}"
+    reachable = reachable_from_root(graph, EXPECTED_ROOT)
+    unreachable = sorted(set(graph) - reachable)
+    assert not unreachable, (
+        f"Skills orfas ou desconectadas da raiz {EXPECTED_ROOT}: {unreachable}"
+    )
+
+
+def test_frontmatter_dependency_targets_exist():
     valid_skills = available_skill_names()
 
     for skill_file in SKILLS_DIR.glob("*/SKILL.md"):
         skill_name = skill_file.parent.name
-        deps = parse_frontmatter_dependencies(skill_file)
-        for dep in deps:
-            assert dep in valid_skills, f"Dependencia inexistente no frontmatter: {skill_name} -> {dep}"
+        dependencies = parse_frontmatter_dependencies(skill_file)
+        for dependency in dependencies:
+            assert dependency in valid_skills, (
+                f"Dependencia inexistente no frontmatter: {skill_name} -> {dependency}"
+            )
 
 
 def test_catalog_and_frontmatter_dependencies_are_consistent():
-    catalog_deps = parse_catalog_dependencies()
+    graph = catalog_graph()
 
     for skill_file in SKILLS_DIR.glob("*/SKILL.md"):
         skill_name = skill_file.parent.name
-        assert skill_name in catalog_deps, f"Skill ausente no catalogo: {skill_name}"
-
-        fm_deps = set(parse_frontmatter_dependencies(skill_file))
-        cat_deps = set(catalog_deps[skill_name])
-        assert fm_deps == cat_deps, (
-            f"Dependencias divergentes para {skill_name}. "
-            f"frontmatter={sorted(fm_deps)} catalogo={sorted(cat_deps)}"
+        assert skill_name in graph, f"Skill ausente no catalogo: {skill_name}"
+        frontmatter_dependencies = parse_frontmatter_dependencies(skill_file)
+        assert frontmatter_dependencies == graph[skill_name], (
+            f"Dependencias divergentes ou fora de ordem para {skill_name}. "
+            f"frontmatter={frontmatter_dependencies} catalogo={graph[skill_name]}"
         )
