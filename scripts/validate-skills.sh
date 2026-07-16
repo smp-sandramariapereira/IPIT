@@ -240,7 +240,9 @@ for skill_dir in "${skill_dirs[@]}"; do
     warn "$skill_name: regra defensiva de BNCC não encontrada"
   fi
 
-  if printf '%s\n' "$body" | grep -qiE 'invent(e|ar|e os) c[oó]digos? (da )?BNCC'; then
+  # Falha apenas quando o texto autoriza explicitamente inventar códigos BNCC.
+  # Formulações defensivas como "Não inventar códigos BNCC" não podem gerar falso positivo.
+  if printf '%s\n' "$body" | grep -qiE '(pode(m)?|deve(m)?|permitid[oa]s?|autorizad[oa]s?)[^.!?]{0,80}invent(ar|e)[^.!?]{0,30}c[oó]digos? (da )?BNCC'; then
     fail "$skill_name: conteúdo aparenta permitir invenção de código BNCC"
   fi
 
