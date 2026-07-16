@@ -21,6 +21,15 @@ EXPECTED_SEQUENCE = [
     "preparar-pitch",
 ]
 
+# Evidencias fornecidas pelo contexto humano ou institucional, e nao por uma
+# skill anterior. Todos os demais itens de required-evidence devem ser
+# rastreaveis a produces de algum ancestral no grafo.
+EXTERNAL_EVIDENCE = {
+    "contexto-inicial-da-turma",
+    "restricoes-de-infraestrutura",
+    "restricoes-de-tempo-e-infraestrutura",
+}
+
 
 def available_skill_names():
     return {path.parent.name for path in SKILLS_DIR.glob("*/SKILL.md")}
@@ -80,30 +89,48 @@ def extract_frontmatter(content):
     return match.group(1)
 
 
-def parse_frontmatter_dependencies(skill_file: Path):
+def parse_frontmatter_list(skill_file: Path, key: str):
     frontmatter = extract_frontmatter(skill_file.read_text(encoding="utf-8"))
-    deps = []
-    in_dep_block = False
+    values = []
+    in_block = False
 
     for line in frontmatter.splitlines():
-        if re.match(r"^\s*depends-on:\s*\[\]\s*$", line):
+        if re.match(rf"^\s*{re.escape(key)}:\s*\[\]\s*$", line):
             return []
 
-        if re.match(r"^\s*depends-on:\s*$", line):
-            in_dep_block = True
-            deps = []
+        if re.match(rf"^\s*{re.escape(key)}:\s*$", line):
+            in_block = True
+            values = []
             continue
 
-        if in_dep_block:
-            dep_match = re.match(r"^\s+-\s*(\S+)\s*$", line)
-            if dep_match:
-                deps.append(dep_match.group(1))
+        if in_block:
+            value_match = re.match(r"^\s+-\s*(\S+)\s*$", line)
+            if value_match:
+                values.append(value_match.group(1))
                 continue
 
             if re.match(r"^\s*[a-zA-Z0-9_-]+:\s*", line):
                 break
 
-    return deps
+    return values
+
+
+def parse_frontmatter_dependencies(skill_file: Path):
+    return parse_frontmatter_list(skill_file, "depends-on")
+
+
+def skill_contracts():
+    contracts = {}
+    for skill_file in SKILLS_DIR.glob("*/SKILL.md"):
+        skill_name = skill_file.parent.name
+        contracts[skill_name] = {
+            "depends_on": parse_frontmatter_list(skill_file, "depends-on"),
+            "required_evidence": parse_frontmatter_list(
+                skill_file, "required-evidence"
+            ),
+            "produces": parse_frontmatter_list(skill_file, "produces"),
+        }
+    return contracts
 
 
 def find_cycle(graph):
@@ -152,6 +179,20 @@ def reachable_from_root(graph, root):
         queue.extend(dependents[current])
 
     return visited
+
+
+def ancestor_skills(graph, skill_name):
+    ancestors = set()
+    stack = list(graph[skill_name])
+
+    while stack:
+        current = stack.pop()
+        if current in ancestors:
+            continue
+        ancestors.add(current)
+        stack.extend(graph[current])
+
+    return ancestors
 
 
 def test_catalog_has_no_duplicate_skill_names():
@@ -280,3 +321,47 @@ def test_catalog_and_frontmatter_dependencies_are_consistent():
             f"Dependencias divergentes ou fora de ordem para {skill_name}. "
             f"frontmatter={frontmatter_dependencies} catalogo={graph[skill_name]}"
         )
+
+
+def test_evidence_contracts_have_no_duplicates():
+    for skill_name, contract in skill_contracts().items():
+        for field in ("required_evidence", "produces"):
+            values = contract[field]
+            duplicates = sorted(
+                value for value, count in Counter(values).items() if count > 1
+            )
+            assert not duplicates, (
+                f"Valores duplicados em {field} de {skill_name}: {duplicates}"
+            )
+
+
+def test_required_evidence_is_available_from_ancestors_or_external_inputs():
+    graph = catalog_graph()
+    contracts = skill_contracts()
+
+    for skill_name, contract in contracts.items():
+        available = set(EXTERNAL_EVIDENCE)
+        for ancestor in ancestor_skills(graph, skill_name):
+            available.update(contracts[ancestor]["produces"])
+
+        missing = sorted(set(contract["required_evidence"]) - available)
+        assert not missing, (
+            f"Evidencias sem origem rastreavel para {skill_name}: {missing}. "
+            f"Disponiveis nos ancestrais ou contexto externo: {sorted(available)}"
+        )
+
+
+def test_each_dependency_edge_has_direct_semantic_handoff():
+    graph = catalog_graph()
+    contracts = skill_contracts()
+
+    for skill_name, dependencies in graph.items():
+        required = set(contracts[skill_name]["required_evidence"])
+        for dependency in dependencies:
+            direct_products = set(contracts[dependency]["produces"])
+            handoff = sorted(required & direct_products)
+            assert handoff, (
+                f"Sem handoff semantico direto: {dependency} -> {skill_name}. "
+                f"required-evidence={sorted(required)} "
+                f"produces-da-dependencia={sorted(direct_products)}"
+            )
