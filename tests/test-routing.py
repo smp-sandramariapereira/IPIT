@@ -6,6 +6,7 @@ ROOT = Path(__file__).resolve().parents[1]
 FIXTURES_DIR = ROOT / "tests" / "fixtures"
 SKILLS_DIR = ROOT / "skills"
 ORCHESTRATOR_FILE = SKILLS_DIR / "orquestrar-ipit" / "SKILL.md"
+CATALOG_FILE = SKILLS_DIR / "catalog.yaml"
 
 
 def load_fixtures():
@@ -19,6 +20,20 @@ def fixture_by_id(fixture_id):
 
 def available_skill_names():
     return {path.parent.name for path in SKILLS_DIR.glob("*/SKILL.md")}
+
+
+def test_catalog_contains_expanded_skill_flow():
+    content = CATALOG_FILE.read_text(encoding="utf-8")
+    chain = [
+        "- name: conduzir-descoberta",
+        "- name: conduzir-ideacao",
+        "- name: desenhar-solucao",
+        "- name: selecionar-tecnologia",
+        "- name: definir-mvp",
+    ]
+    positions = [content.find(item) for item in chain]
+    assert all(pos >= 0 for pos in positions), "Fluxo expandido ausente em skills/catalog.yaml"
+    assert positions == sorted(positions), "Ordem do fluxo expandido invalida em skills/catalog.yaml"
 
 
 def test_expected_routes_target_existing_skills():
@@ -45,6 +60,23 @@ def test_routing_respects_dependency_chain_in_orchestrator():
     content = ORCHESTRATOR_FILE.read_text(encoding="utf-8")
     assert "`iniciar-ideathon` -> `orquestrar-ipit` -> `planejar-arquitetura`" in content
     assert "`planejar-arquitetura` -> `acompanhar-desenvolvimento` -> `preparar-pitch`" in content
+
+
+def test_expected_skills_for_routing_exist():
+    expected = {
+        "identificar-persona",
+        "iniciar-ideathon",
+        "orquestrar-ipit",
+        "conduzir-descoberta",
+        "conduzir-ideacao",
+        "desenhar-solucao",
+        "selecionar-tecnologia",
+        "definir-mvp",
+        "planejar-arquitetura",
+        "acompanhar-desenvolvimento",
+        "preparar-pitch",
+    }
+    assert expected.issubset(available_skill_names()), "Skills esperadas para roteamento nao estao implantadas"
 
 
 def test_persona_coverage_for_routing_scenarios():

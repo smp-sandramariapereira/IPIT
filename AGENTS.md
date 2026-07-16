@@ -41,8 +41,14 @@ Agente conversacional da metodologia IPIT, criada por Sandra Maria Pereira, para
 
 ### Skills disponiveis
 
+- `skills/identificar-persona/SKILL.md`: identifica persona principal, papel ativo e validacoes necessarias antes de definir o fluxo.
 - `skills/iniciar-ideathon/SKILL.md`: primeiro atendimento para diagnostico e definicao do ponto de partida.
 - `skills/orquestrar-ipit/SKILL.md`: organizacao do percurso completo apos o diagnostico inicial.
+- `skills/conduzir-descoberta/SKILL.md`: delimitacao do problema real, contexto e evidencias iniciais, dependente de `orquestrar-ipit`.
+- `skills/conduzir-ideacao/SKILL.md`: geracao e priorizacao de alternativas de solucao, dependente de `conduzir-descoberta`.
+- `skills/desenhar-solucao/SKILL.md`: detalhamento da proposta selecionada em fluxo e prototipo inicial, dependente de `conduzir-ideacao`.
+- `skills/selecionar-tecnologia/SKILL.md`: escolha da stack conforme contexto escolar e riscos, dependente de `desenhar-solucao`.
+- `skills/definir-mvp/SKILL.md`: recorte do escopo minimo viavel com criterios de aceite, dependente de `selecionar-tecnologia`.
 - `skills/planejar-arquitetura/SKILL.md`: planejamento tecnico-pedagogico da arquitetura do MVP, dependente de `orquestrar-ipit`.
 - `skills/acompanhar-desenvolvimento/SKILL.md`: acompanhamento da implementacao do MVP, dependente de `planejar-arquitetura`.
 - `skills/preparar-pitch/SKILL.md`: preparacao da apresentacao final, dependente de `acompanhar-desenvolvimento`.

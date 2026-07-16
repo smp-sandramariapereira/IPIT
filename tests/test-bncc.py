@@ -6,6 +6,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 AGENTS_FILE = ROOT / "AGENTS.md"
 FIXTURES_DIR = ROOT / "tests" / "fixtures"
+POLICY_FILE = ROOT / "guardrails" / "policy.yaml"
 
 # Padroes comuns de codigos BNCC, ex.: EM13LGG101, EF69LP01
 BNCC_CODE_PATTERN = re.compile(r"\b(?:EM|EF)\d{2}[A-Z]{2,3}\d{2,3}\b")
@@ -41,4 +42,10 @@ def test_fixture_for_unconfirmed_bncc_requires_validation_flow():
     fixture = next(f for f in load_fixtures() if f["id"] == "habilidade-bncc-nao-confirmada")
     assert fixture["policy"]["requires_bncc_validation_phrase"] is True
     assert "a validar pela equipe pedagogica" in fixture["expected_next_step"]
+
+
+def test_guardrails_policy_blocks_unverified_bncc_as_definitive():
+    content = POLICY_FILE.read_text(encoding="utf-8")
+    assert "gr-bncc-codigo-nao-verificado" in content
+    assert "bncc_unverified_definitive" in content
 

@@ -12,6 +12,26 @@ skills:
     path: skills/orquestrar-ipit/SKILL.md
     depends_on:
       - iniciar-ideathon
+  - name: conduzir-descoberta
+    path: skills/conduzir-descoberta/SKILL.md
+    depends_on:
+      - orquestrar-ipit
+  - name: conduzir-ideacao
+    path: skills/conduzir-ideacao/SKILL.md
+    depends_on:
+      - conduzir-descoberta
+  - name: desenhar-solucao
+    path: skills/desenhar-solucao/SKILL.md
+    depends_on:
+      - conduzir-ideacao
+  - name: selecionar-tecnologia
+    path: skills/selecionar-tecnologia/SKILL.md
+    depends_on:
+      - desenhar-solucao
+  - name: definir-mvp
+    path: skills/definir-mvp/SKILL.md
+    depends_on:
+      - selecionar-tecnologia
   - name: planejar-arquitetura
     path: skills/planejar-arquitetura/SKILL.md
     depends_on:

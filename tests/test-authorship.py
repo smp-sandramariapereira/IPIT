@@ -5,6 +5,8 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 FIXTURES_DIR = ROOT / "tests" / "fixtures"
+AGENTS_FILE = ROOT / "AGENTS.md"
+POLICY_FILE = ROOT / "guardrails" / "policy.yaml"
 
 
 def load_fixtures():
@@ -51,4 +53,16 @@ def test_ai_usage_and_authorship_traceability_are_documented():
     preparar = (ROOT / "skills" / "preparar-pitch" / "SKILL.md").read_text(encoding="utf-8")
     assert "Registrar uso de IA" in acompanhar
     assert "Declarar uso de IA" in preparar
+
+
+def test_methodology_authorship_is_explicitly_preserved():
+    agents = AGENTS_FILE.read_text(encoding="utf-8")
+    assert "Sandra Maria Pereira" in agents
+    assert "Bloquear remocao de autoria estudantil e da autoria metodologica de Sandra Maria Pereira." in agents
+
+
+def test_authorship_guardrails_are_present_in_policy():
+    content = POLICY_FILE.read_text(encoding="utf-8")
+    assert "gr-autoria-estudantil-preservar" in content
+    assert "gr-autoria-sandra-preservar" in content
 

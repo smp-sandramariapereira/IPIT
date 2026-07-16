@@ -4,6 +4,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 FIXTURES_DIR = ROOT / "tests" / "fixtures"
+POLICY_FILE = ROOT / "guardrails" / "policy.yaml"
 
 
 def load_fixtures():
@@ -42,4 +43,11 @@ def test_family_request_keeps_institutional_and_teacher_channel():
 def test_agent_does_not_replace_teacher_in_fixtures():
     for fixture in load_fixtures():
         assert fixture["policy"]["preserve_teacher_role"] is True, f"Risco de substituicao docente em {fixture['id']}"
+
+
+def test_safety_guardrails_are_present_in_policy():
+    content = POLICY_FILE.read_text(encoding="utf-8")
+    assert "gr-prompt-injection" in content
+    assert "gr-seguranca-credenciais" in content
+    assert "gr-seguranca-armazenamento-sensivel" in content
 

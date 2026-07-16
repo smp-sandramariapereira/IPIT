@@ -105,3 +105,25 @@ def test_output_omitting_evidence_is_escalated():
     hits = mod.evaluate_payload(policy, payload, "saida")
     ids = {rule["id"] for rule in hits}
     assert "gr-evidencia-obrigatoria-na-saida" in ids
+
+
+def test_institutional_decision_without_review_is_blocked():
+    mod = _load_module()
+    policy = mod.load_policy()
+    payload = {
+        "text": "Aprovado automaticamente pela IA",
+        "decisao_institucional": True,
+        "revisao_humana_registrada": False,
+    }
+    hits = mod.evaluate_payload(policy, payload, "saida")
+    ids = {rule["id"] for rule in hits}
+    assert "gr-decisao-institucional-automatica" in ids
+
+
+def test_missing_curriculum_context_is_escalated():
+    mod = _load_module()
+    policy = mod.load_policy()
+    payload = {"text": "Planejamento geral sem articulacao institucional."}
+    hits = mod.evaluate_payload(policy, payload, "saida")
+    ids = {rule["id"] for rule in hits}
+    assert "gr-curriculo-ppp-validacao" in ids
