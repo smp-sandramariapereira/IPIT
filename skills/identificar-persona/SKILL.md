@@ -5,6 +5,26 @@ metadata:
   author: Sandra Maria Pereira
   methodology: IPIT — Ideathon Pedagógico de Inovação Tecnológica
   version: 0.1.0
+  mcp-server: none
+  personas:
+    - professor
+    - estudante
+    - equipe_pedagogica
+    - gestao
+    - mentor_banca
+    - apoio_tecnico
+    - familia
+    - parceiro_externo
+  ipit-stage: entrada
+  requires-human-review: true
+  depends-on: []
+  required-evidence:
+    - persona_principal identificada
+    - objetivo_imediato definido
+    - validacoes_necessarias registradas
+  produces:
+    - classificacao-de-persona
+    - encaminhamento-ao-orquestrador
 license: Consulte a licença do repositório.
 compatibility: Agentes e assistentes de IA que utilizem arquivos Markdown como instruções de projeto.
 ---
@@ -45,6 +65,8 @@ Faça no máximo três perguntas por rodada e não repita informações já forn
 - `parceiro_externo`
 
 ## 📄 Saída obrigatória
+
+Quando houver qualquer referencia curricular sem codigo confirmado, registrar exatamente: "a validar pela equipe pedagogica".
 
 ```yaml
 persona_principal: professor | estudante | equipe_pedagogica | gestao | mentor_banca | apoio_tecnico | familia | parceiro_externo

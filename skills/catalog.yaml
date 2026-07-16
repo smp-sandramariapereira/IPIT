@@ -2,6 +2,9 @@ version: "1.0.0"
 owner: "Sandra Maria Pereira"
 methodology: "IPIT"
 skills:
+  - name: identificar-persona
+    path: skills/identificar-persona/SKILL.md
+    depends_on: []
   - name: iniciar-ideathon
     path: skills/iniciar-ideathon/SKILL.md
     depends_on: []
