@@ -1,0 +1,17 @@
+{
+  "id": "gestao-avaliando-viabilidade",
+  "persona": "gestao-escolar",
+  "request": "Avalie viabilidade de cronograma, recursos e riscos do Ideathon.",
+  "expected_route": "orquestrar-ipit",
+  "expected_next_step": "definir checkpoints de validacao pedagogica e tecnica",
+  "response_requirements": {
+    "must_include_evidence": true,
+    "must_include_next_step": true
+  },
+  "policy": {
+    "requires_human_review": true,
+    "preserve_teacher_role": true,
+    "protect_student_authorship": true,
+    "protect_student_privacy": true
+  }
+}

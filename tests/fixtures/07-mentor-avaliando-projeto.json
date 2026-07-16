@@ -1,0 +1,17 @@
+{
+  "id": "mentor-avaliando-projeto",
+  "persona": "mentor",
+  "request": "Quero avaliar progresso, testes e limitacoes do projeto.",
+  "expected_route": "acompanhar-desenvolvimento",
+  "expected_next_step": "consolidar evidencias e riscos do incremento",
+  "response_requirements": {
+    "must_include_evidence": true,
+    "must_include_next_step": true
+  },
+  "policy": {
+    "requires_human_review": true,
+    "preserve_teacher_role": true,
+    "protect_student_authorship": true,
+    "protect_student_privacy": true
+  }
+}
