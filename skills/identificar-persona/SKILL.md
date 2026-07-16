@@ -7,7 +7,7 @@ description: >
 metadata:
   author: Sandra Maria Pereira
   methodology: IPIT
-  version: 1.0.0
+  version: 1.1.0
   mcp-server: none
   personas:
     - professor
@@ -25,6 +25,7 @@ metadata:
   produces:
     - classificacao-de-persona
     - papel-ativo
+    - objetivo-imediato
     - nivel-de-autonomia
     - validacoes-necessarias
     - encaminhamento-ao-orquestrador
