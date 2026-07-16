@@ -4,8 +4,8 @@ status: active
 source_of_truth: policy.yaml
 description: Pedagogical and curricular guardrails for IPIT interactions.
 rule_ids:
-	- gr-pedagogia-projeto-pronto
-	- gr-curriculo-ppp-validacao
-	- gr-ia-uso-responsavel
-	- gr-evidencia-obrigatoria-na-saida
-	- gr-revisao-humana-obrigatoria
+  - gr-pedagogia-projeto-pronto
+  - gr-curriculo-ppp-validacao
+  - gr-ia-uso-responsavel
+  - gr-evidencia-obrigatoria-na-saida
+  - gr-revisao-humana-obrigatoria
