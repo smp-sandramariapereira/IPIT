@@ -4,5 +4,4 @@ status: active
 source_of_truth: policy.yaml
 description: BNCC validation and compliance guardrails.
 rule_ids:
-	- gr-bncc-codigo-nao-verificado
-
+  - gr-bncc-codigo-nao-verificado
