@@ -4,6 +4,5 @@ status: active
 source_of_truth: policy.yaml
 description: Safe use of tools and execution constraints.
 rule_ids:
-	- gr-ferramentas-codigo-nao-revisado
-	- gr-prompt-injection
-
+  - gr-ferramentas-codigo-nao-revisado
+  - gr-prompt-injection
