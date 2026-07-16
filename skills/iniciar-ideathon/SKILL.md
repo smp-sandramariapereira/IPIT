@@ -1,300 +1,95 @@
 ---
 name: iniciar-ideathon
-description: Diagnostica o contexto escolar e cria o plano inicial de aplicação do IPIT com alinhamento à BNCC, ao currículo local e à validação da equipe pedagógica.
+description: >
+	Conduzir o primeiro atendimento para iniciar um Ideathon pedagogico com
+	diagnostico objetivo e sem gerar plano completo prematuro. Use when o
+	docente ainda esta definindo contexto, limites e intencao pedagogica.
 metadata:
-  author: Sandra Maria Pereira
-  methodology: IPIT — Ideathon Pedagógico de Inovação Tecnológica
-  version: 0.2.0
-license: Consulte a licença do repositório.
-compatibility: Agentes e assistentes de IA que utilizem arquivos Markdown como instruções de projeto.
+	author: Sandra Maria Pereira
+	methodology: IPIT
+	version: 1.0.0
+	mcp-server: none
+	personas:
+		- professor
+		- professora
+	ipit-stage: inicio
+	requires-human-review: true
+	depends-on: []
+	required-evidence:
+		- perfil docente e contexto da turma
+		- intencao pedagogica inicial
+		- restricoes de tempo e infraestrutura
+	produces:
+		- diagnostico-inicial
+		- perguntas-diagnosticas
+		- proximo-passo-definido
+license: repository-license
+compatibility: GitHub Copilot, Codex e agentes compativeis com Markdown
 ---
 
-# 🚀 Skill: iniciar-ideathon
+## Instructions - Instrucoes
 
-## 🎯 Finalidade
+- Declarar a skill utilizada: `iniciar-ideathon`.
+- Identificar perfil docente, etapa/serie, area e intencao pedagogica.
+- Fazer no maximo tres perguntas diagnosticas, curtas e acionaveis.
+- Nao gerar plano completo, cronograma final ou rubrica completa nesta etapa.
+- Ajustar perguntas a tempo, infraestrutura, turma e equipamentos disponiveis.
+- Incluir desde o inicio curriculo local, PPP, avaliacao processual, inclusao e acessibilidade.
+- Registrar necessidade de participacao da equipe pedagogica quando houver decisao curricular.
+- Encerrar com sintese do contexto e proximo passo claro.
 
-Orientar professor, equipe pedagógica ou gestão escolar na definição do primeiro plano de aplicação do IPIT.
+## Inputs - Entradas
 
-A skill transforma uma intenção inicial em uma proposta coerente com:
+- Pedido inicial do docente para iniciar Ideathon (bloqueante).
+- Contexto de turma, ano/serie e componente curricular (bloqueante).
+- Restricoes de tempo e infraestrutura (bloqueante).
+- Objetivo pedagogico inicial (bloqueante).
+- Contexto BNCC/curriculo local/PPP (nao bloqueante, registrar "a validar pela equipe pedagogica" quando faltar confirmacao).
 
-- BNCC;
-- currículo da rede e da escola;
-- Projeto Político-Pedagógico, quando aplicável;
-- objetivos de aprendizagem;
-- perfil dos estudantes;
-- tempo e infraestrutura;
-- avaliação por evidências;
-- segurança, privacidade, inclusão e acessibilidade;
-- validação da equipe pedagógica.
+## Outputs - Saidas
 
-**Autora da metodologia:** Sandra Maria Pereira.
+- Perfil e contexto inicial sintetizados.
+- Intencao pedagogica declarada.
+- Ate tres perguntas diagnosticas objetivas.
+- Proximo passo acionavel para continuar a jornada.
+- Limite explicito: nao entregar projeto pronto nem plano completo nesta etapa.
 
----
+## BNCC Alignment - Alinhamento a BNCC
 
-## 👥 Quando usar
+- Nao inventar codigos BNCC.
+- Quando nao houver habilidade confirmada, registrar: "a validar pela equipe pedagogica".
+- Relacionar diagnostico ao curriculo local, PPP e contexto escolar.
 
-Use quando o usuário quiser:
+## Safety and Pedagogy - Seguranca e pedagogia
 
-- começar uma aplicação do IPIT;
-- escolher o formato adequado;
-- montar cronograma e plano inicial;
-- apresentar a proposta à equipe pedagógica;
-- verificar alinhamento curricular e viabilidade;
-- adaptar a metodologia às condições da escola.
+- Nao solicitar nem expor dados pessoais desnecessarios de estudantes.
+- Nao aceitar pedido de trabalho avaliativo completo por estudante.
+- Nao solicitar credenciais, tokens ou segredos.
+- Garantir linguagem pedagogicamente responsavel e inclusiva.
+- Exigir revisao humana em decisoes pedagogicas, curriculares ou institucionais.
 
-Não use para conduzir uma etapa específica já iniciada.
+## Examples - Exemplos
 
----
+- Exemplo de saida: "Perfil identificado (3o ano tecnico, 8 encontros). Perguntas: 1) Qual problema real da escola sera investigado? 2) Quais recursos estao disponiveis por encontro? 3) Quais criterios de avaliacao processual a equipe pedagogica quer adotar?"
 
-## 🧭 Instruções
+## Performance Notes - Notas de desempenho
 
-### 1. Identifique o perfil
+- Prioridade: seguranca pedagogica e de dados -> clareza do diagnostico -> proximo passo.
+- Responder de forma curta; evitar plano detalhado nesta etapa.
+- Se faltar entrada bloqueante, interromper e solicitar dados minimos.
 
-Confirme se o interlocutor é professor, coordenador pedagógico, gestor, equipe técnica ou outro profissional.
+## Troubleshooting - Solucao de problemas
 
-Se for estudante, informe que o planejamento curricular e institucional precisa de validação docente.
+- Erro bloqueante: ausencia de contexto da turma, objetivo pedagogico ou restricoes basicas.
+- Aviso nao bloqueante: BNCC pendente de confirmacao, PPP ainda nao informado.
+- Em risco curricular ou institucional, escalar para equipe pedagogica/gestao.
 
-### 2. Faça diagnóstico progressivo
+## Criterios de conclusao
 
-Comece por no máximo três perguntas:
+A skill conclui quando houver perfil e contexto inicial registrados, intencao pedagogica clara, ate tres perguntas diagnosticas definidas e proximo passo acionavel sem gerar plano completo.
 
-1. Qual etapa de ensino, ano/série, modalidade e turma participarão?
-2. Quais áreas, componentes ou objetivos curriculares a escola pretende trabalhar?
-3. Quanto tempo e quais recursos estão disponíveis?
+## Politica de atualizacao
 
-Depois, aprofunde conforme necessário:
-
-- número de estudantes;
-- competências e habilidades já previstas no planejamento;
-- códigos BNCC fornecidos pela escola;
-- currículo da rede e PPP;
-- experiência técnica;
-- internet e equipamentos;
-- acessibilidade;
-- professores e parceiros;
-- avaliação;
-- culminância;
-- dados, imagem e privacidade.
-
-### 3. Faça o alinhamento curricular
-
-Consulte `references/alinhamento-bncc.md`.
-
-O agente deve:
-
-1. identificar objetivos de aprendizagem;
-2. selecionar apenas competências gerais realmente mobilizadas;
-3. identificar área e componente curricular;
-4. usar códigos BNCC somente quando fornecidos ou verificados;
-5. escrever **“a validar pela equipe pedagógica”** quando o código não estiver confirmado;
-6. definir uma evidência observável para cada objetivo;
-7. relacionar a evidência a um critério de avaliação.
-
-Nunca invente códigos BNCC.
-
-### 4. Classifique a prontidão
-
-| Nível | Situação | Recomendação |
-|---|---|---|
-| 🟢 Pronto para piloto | turma, objetivo, alinhamento inicial, tempo e recursos mínimos definidos | criar plano de aplicação |
-| 🟡 Requer ajustes | há lacunas curriculares, operacionais ou institucionais administráveis | propor ajustes e responsáveis |
-| 🔴 Não iniciar ainda | riscos críticos ou ausência de condições básicas | elaborar plano de preparação |
-
-A classificação não é julgamento da escola.
-
-### 5. Recomende o formato
-
-| Formato | Uso recomendado |
-|---|---|
-| ⚡ Micro-Ideathon | piloto curto e protótipo conceitual |
-| 🗓️ Oito encontros | uma etapa por encontro |
-| 📚 Projeto bimestral ou trimestral | integração curricular e desenvolvimento aprofundado |
-| 🏫 Programa institucional | várias turmas, áreas e parceiros |
-
-Consulte `docs/formatos-de-aplicacao.md`.
-
-### 6. Produza o plano inicial
-
-Inclua obrigatoriamente:
-
-- título e contexto;
-- etapa de ensino, turma e modalidade;
-- áreas e componentes envolvidos;
-- objetivo geral;
-- objetivos de aprendizagem;
-- competências gerais selecionadas e justificadas;
-- habilidades BNCC confirmadas ou marcadas para validação;
-- articulação com currículo local e PPP;
-- formato e duração;
-- cronograma;
-- responsabilidades;
-- recursos;
-- inclusão e acessibilidade;
-- avaliação por evidências;
-- segurança e privacidade;
-- riscos;
-- pontos de validação da equipe pedagógica;
-- próximos passos.
-
-### 7. Explique as decisões
-
-Após o plano, explique de três a cinco critérios usados, como:
-
-- aprendizagem pretendida;
-- coerência com a BNCC e currículo local;
-- tempo;
-- maturidade da turma;
-- equipamentos;
-- capacidade de acompanhamento docente.
-
-### 8. Evidência de conclusão
-
-A skill termina quando houver:
-
-- plano documentado;
-- matriz curricular inicial;
-- formato escolhido;
-- responsáveis por pendências;
-- validação pedagógica prevista;
-- próxima ação definida.
-
----
-
-## 📄 Modelo de saída
-
-```markdown
-# 🚀 Plano Inicial do IPIT
-
-**Autora da metodologia:** Sandra Maria Pereira  
-**Escola:** [nome]  
-**Etapa/ano/série:** [informação]  
-**Turma:** [turma]  
-**Responsável:** [nome]
-
-## 🎯 Objetivo geral
-
-[objetivo]
-
-## 🇧🇷 Alinhamento à BNCC e ao currículo
-
-| Etapa/atividade | Objetivo de aprendizagem | Competência geral | Área/componente | Habilidade BNCC | Evidência | Avaliação |
-|---|---|---|---|---|---|---|
-| [atividade] | [objetivo] | [competência] | [área] | [código confirmado ou “a validar”] | [entregável] | [critério] |
-
-## 🧭 Formato recomendado
-
-[formato e justificativa]
-
-## 🗓️ Cronograma
-
-| Momento | Atividade | Responsável | Evidência |
-|---|---|---|---|
-| 1 | [atividade] | [responsável] | [entregável] |
-
-## 📊 Avaliação
-
-[critérios e evidências]
-
-## ♿ Inclusão e acessibilidade
-
-[adaptações]
-
-## 🔒 Segurança e privacidade
-
-[medidas]
-
-## 🏫 Pontos para validação da equipe pedagógica
-
-- [competências e habilidades]
-- [cronograma]
-- [avaliação]
-- [autorizações e recursos]
-
-## ⚠️ Riscos e respostas
-
-| Risco | Impacto | Resposta |
-|---|---|---|
-| [risco] | [impacto] | [ação] |
-
-## 🚀 Próximo passo
-
-[ação concreta]
-```
-
----
-
-## 💬 Exemplo de interação
-
-**Usuária:**
-
-> Quero aplicar o IPIT com 30 estudantes, 10 computadores e quatro aulas.
-
-**Agente:**
-
-> 🧭 Para estruturar uma proposta curricularmente coerente, preciso confirmar três pontos:
->
-> 1. Qual é o ano/série e a modalidade da turma?
-> 2. Quais componentes ou objetivos de aprendizagem devem ser integrados?
-> 3. As quatro aulas são consecutivas ou distribuídas?
->
-> Não atribuirei códigos BNCC sem confirmação. Quando necessário, prepararei uma matriz inicial para validação da equipe pedagógica.
-
----
-
-## ✅ Critérios de qualidade
-
-Uma boa saída:
-
-- não pressupõe recursos inexistentes;
-- não inventa códigos BNCC;
-- conecta atividade, aprendizagem, evidência e avaliação;
-- diferencia BNCC, currículo local e objetivos da Educação Profissional;
-- inclui a equipe pedagógica;
-- oferece alternativas para pouca infraestrutura;
-- preserva autoria docente e estudantil;
-- registra a autoria de Sandra Maria Pereira.
-
----
-
-## ⚠️ Situações críticas
-
-Interrompa e solicite validação quando houver:
-
-- código BNCC não verificado apresentado como definitivo;
-- ausência de objetivo de aprendizagem;
-- publicação de dados ou imagens sem autorização;
-- coleta de dados sensíveis;
-- ferramenta com idade mínima incompatível;
-- avaliação automatizada sem revisão docente;
-- ausência de supervisão;
-- conflito com currículo, PPP ou normas da escola.
-
----
-
-## 🛠️ Solução de problemas
-
-### A escola ainda não definiu habilidades
-
-Crie objetivos em linguagem pedagógica, selecione competências gerais pertinentes e marque os códigos como **“a validar pela equipe pedagógica”**.
-
-### Poucos equipamentos
-
-Proponha rodízio, prototipação em papel, atividades desplugadas e estações.
-
-### Tempo curto
-
-Recomende Micro-Ideathon com escopo reduzido.
-
-### Proposta ainda não aprovada
-
-Gere documento preliminar identificado como **“para validação”**.
-
----
-
-## ⚡ Notas de desempenho
-
-- Faça no máximo três perguntas por rodada.
-- Reutilize informações existentes.
-- Apresente primeiro a decisão principal.
-- Não liste todas as competências gerais automaticamente.
-- Mantenha as recomendações executáveis no contexto escolar.
+- PATCH: ajustes textuais sem mudanca de comportamento.
+- MINOR: nova regra de diagnostico compativel com o fluxo atual.
+- MAJOR: mudanca de escopo da etapa inicial ou de criterios de conclusao.

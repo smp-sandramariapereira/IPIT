@@ -43,10 +43,8 @@ def test_skill_inexistente_routes_to_safe_fallback():
 
 def test_routing_respects_dependency_chain_in_orchestrator():
     content = ORCHESTRATOR_FILE.read_text(encoding="utf-8")
-    assert "acompanhar-desenvolvimento" in content
-    assert "dependente de `planejar-arquitetura`" in content
-    assert "preparar-pitch" in content
-    assert "dependente de `acompanhar-desenvolvimento`" in content
+    assert "`iniciar-ideathon` -> `orquestrar-ipit` -> `planejar-arquitetura`" in content
+    assert "`planejar-arquitetura` -> `acompanhar-desenvolvimento` -> `preparar-pitch`" in content
 
 
 def test_persona_coverage_for_routing_scenarios():

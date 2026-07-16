@@ -1,0 +1,23 @@
+version: "1.0.0"
+owner: "Sandra Maria Pereira"
+methodology: "IPIT"
+skills:
+  - name: iniciar-ideathon
+    path: skills/iniciar-ideathon/SKILL.md
+    depends_on: []
+  - name: orquestrar-ipit
+    path: skills/orquestrar-ipit/SKILL.md
+    depends_on:
+      - iniciar-ideathon
+  - name: planejar-arquitetura
+    path: skills/planejar-arquitetura/SKILL.md
+    depends_on:
+      - orquestrar-ipit
+  - name: acompanhar-desenvolvimento
+    path: skills/acompanhar-desenvolvimento/SKILL.md
+    depends_on:
+      - planejar-arquitetura
+  - name: preparar-pitch
+    path: skills/preparar-pitch/SKILL.md
+    depends_on:
+      - acompanhar-desenvolvimento
