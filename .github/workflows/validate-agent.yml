@@ -31,3 +31,6 @@ jobs:
 
       - name: Run dependency consistency tests
         run: pytest tests/test-dependencies.py -q
+
+      - name: Run negative validator tests
+        run: pytest tests/test-negative-validation.py -q
