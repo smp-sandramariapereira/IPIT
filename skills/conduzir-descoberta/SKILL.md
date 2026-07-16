@@ -3,12 +3,12 @@ name: conduzir-descoberta
 description: >
   Conduz a etapa de descoberta do IPIT para investigar e delimitar um problema
   real com contexto, público afetado e evidências verificáveis. Use when a
-  jornada já foi orquestrada e a equipe precisa compreender o problema antes
-  de propor soluções.
+  abertura operacional já foi concluída e a equipe precisa compreender o
+  problema antes de propor soluções.
 metadata:
   author: Sandra Maria Pereira
   methodology: IPIT
-  version: 1.1.0
+  version: 2.0.0
   mcp-server: none
   personas:
     - professor
@@ -17,11 +17,12 @@ metadata:
   ipit-stage: descoberta
   requires-human-review: true
   depends-on:
-    - orquestrar-ipit
+    - iniciar-ideathon
   required-evidence:
-    - persona-identificada
-    - intencao-classificada
-    - contexto-inicial-da-turma
+    - acordo-de-trabalho
+    - desafio-inicial
+    - papeis-e-responsabilidades
+    - restricoes-confirmadas
   produces:
     - definicao-do-problema
     - mapa-de-contexto
@@ -51,7 +52,7 @@ Trigger phrases: “precisamos definir o problema”, “vamos iniciar a descobe
 ## Instructions — Instruções
 
 1. Declare a skill `conduzir-descoberta`.
-2. Confirme a execução prévia de `orquestrar-ipit`.
+2. Confirme a execução prévia de `iniciar-ideathon` e a existência do acordo de trabalho.
 3. Registre contexto, atores, restrições e público afetado.
 4. Separe fatos observados, relatos, fontes, hipóteses e interpretações.
 5. Não aceite entrevistas, estatísticas, testes ou observações inventadas.
@@ -65,16 +66,17 @@ Faça no máximo três perguntas por rodada.
 
 ### Obrigatórias
 
-- persona e papel ativo identificados;
-- intenção classificada pelo orquestrador;
-- contexto inicial da turma ou projeto;
+- acordo de trabalho aprovado;
+- desafio inicial investigável;
+- papéis e responsabilidades definidos;
+- restrições de tempo, infraestrutura, acessibilidade e dados confirmadas;
 - situação problemática a investigar.
 
 ### Opcionais
 
 - observações, entrevistas ou fontes já coletadas;
-- restrições de tempo, infraestrutura e acessibilidade;
-- objetivos de aprendizagem e componentes curriculares.
+- objetivos de aprendizagem e componentes curriculares;
+- currículo local, PPP e referências BNCC confirmadas.
 
 A ausência de evidência real não impede o início, mas impede declarar o problema como validado.
 
@@ -94,7 +96,7 @@ Entregável recomendado: `docs/01-descoberta.md` no repositório da equipe.
 
 ## Dependencies — Dependências
 
-Depende de `skills/orquestrar-ipit/SKILL.md` e das evidências declaradas no frontmatter. Não avance para ideação sem problema suficientemente delimitado e revisão docente.
+Depende de `skills/iniciar-ideathon/SKILL.md` e das evidências declaradas no frontmatter. Não avance para ideação sem problema suficientemente delimitado e revisão docente.
 
 ## BNCC Alignment — Alinhamento à BNCC
 
