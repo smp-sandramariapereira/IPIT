@@ -4,6 +4,5 @@ status: active
 source_of_truth: policy.yaml
 description: Preservation of student and methodological authorship.
 rule_ids:
-	- gr-autoria-estudantil-preservar
-	- gr-autoria-sandra-preservar
-
+  - gr-autoria-estudantil-preservar
+  - gr-autoria-sandra-preservar
