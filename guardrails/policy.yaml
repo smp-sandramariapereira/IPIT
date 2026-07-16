@@ -6,6 +6,41 @@
     "methodology": "IPIT"
   },
   "levels": ["info", "warning", "block", "escalate"],
+  "modules": {
+    "pedagogical.yaml": [
+      "gr-pedagogia-projeto-pronto",
+      "gr-curriculo-ppp-validacao",
+      "gr-ia-uso-responsavel",
+      "gr-evidencia-obrigatoria-na-saida",
+      "gr-revisao-humana-obrigatoria"
+    ],
+    "bncc.yaml": ["gr-bncc-codigo-nao-verificado"],
+    "privacy.yaml": [
+      "gr-privacidade-dados-estudantes",
+      "gr-protecao-menores-imagens"
+    ],
+    "safety.yaml": [
+      "gr-prompt-injection",
+      "gr-seguranca-credenciais",
+      "gr-seguranca-armazenamento-sensivel",
+      "gr-decisao-institucional-automatica",
+      "gr-info-fonte-nao-instrucao"
+    ],
+    "authorship.yaml": [
+      "gr-autoria-estudantil-preservar",
+      "gr-autoria-sandra-preservar"
+    ],
+    "tool-use.yaml": [
+      "gr-ferramentas-codigo-nao-revisado",
+      "gr-prompt-injection"
+    ],
+    "response-contract.yaml": [
+      "gr-evidencia-obrigatoria-na-saida",
+      "gr-revisao-humana-obrigatoria",
+      "gr-ia-uso-responsavel",
+      "gr-bncc-codigo-nao-verificado"
+    ]
+  },
   "rules": [
     {
       "id": "gr-pedagogia-projeto-pronto",

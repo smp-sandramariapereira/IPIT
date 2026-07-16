@@ -8,6 +8,19 @@ Esta referencia descreve a camada formal de guardrails do agente para reforcar s
 
 - `guardrails/policy.yaml`
 
+## Arquivos tematicos
+
+- `guardrails/pedagogical.yaml`
+- `guardrails/bncc.yaml`
+- `guardrails/privacy.yaml`
+- `guardrails/safety.yaml`
+- `guardrails/authorship.yaml`
+- `guardrails/tool-use.yaml`
+- `guardrails/response-contract.yaml`
+
+Cada arquivo tematico declara `source_of_truth: policy.yaml` e lista os `rule_ids` daquele dominio.
+O campo `modules` em `guardrails/policy.yaml` deve refletir exatamente os mesmos IDs por arquivo.
+
 ## Cobertura obrigatoria
 
 Os guardrails cobrem:
@@ -54,6 +67,13 @@ Os guardrails cobrem:
 
 - `python scripts/validate-guardrails.py`
 - `pytest tests/test-guardrails.py`
+
+A validacao automatizada verifica:
+
+- esquema da policy consolidada;
+- presenca de arquivos tematicos obrigatorios;
+- consistencia entre `policy.modules` e `rule_ids` dos arquivos tematicos;
+- cobertura total: toda regra da policy aparece em ao menos um arquivo tematico.
 
 ## Relacao com politicas existentes
 

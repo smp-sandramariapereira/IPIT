@@ -1,0 +1,9 @@
+version: 1.0.0
+scope: privacy
+status: active
+source_of_truth: policy.yaml
+description: Student data minimization and privacy protection guardrails.
+rule_ids:
+	- gr-privacidade-dados-estudantes
+	- gr-protecao-menores-imagens
+

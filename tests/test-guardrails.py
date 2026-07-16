@@ -21,6 +21,22 @@ def test_policy_schema_is_valid():
     assert errors == []
 
 
+def test_thematic_alignment_is_valid():
+    mod = _load_module()
+    policy = mod.load_policy()
+    errors = mod.validate_thematic_alignment(policy)
+    assert errors == []
+
+
+def test_policy_modules_match_thematic_files():
+    mod = _load_module()
+    policy = mod.load_policy()
+    modules = policy.get("modules", {})
+    thematic = mod.load_thematic_rule_ids()
+    for filename in mod.THEMATIC_FILES:
+        assert set(modules.get(filename, [])) == thematic.get(filename, set())
+
+
 def test_student_requesting_ready_made_project_is_blocked():
     mod = _load_module()
     policy = mod.load_policy()

@@ -9,6 +9,17 @@ from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
 POLICY_PATH = ROOT / "guardrails" / "policy.yaml"
+GUARDRAILS_DIR = ROOT / "guardrails"
+
+THEMATIC_FILES = (
+    "pedagogical.yaml",
+    "bncc.yaml",
+    "privacy.yaml",
+    "safety.yaml",
+    "authorship.yaml",
+    "tool-use.yaml",
+    "response-contract.yaml",
+)
 
 REQUIRED_LEVELS = {"info", "warning", "block", "escalate"}
 REQUIRED_RULE_FIELDS = {
@@ -43,6 +54,77 @@ def load_policy(path: Path = POLICY_PATH) -> dict[str, Any]:
         return json.loads(raw)
     except json.JSONDecodeError as exc:
         raise ValueError(f"guardrails/policy.yaml deve ser JSON valido (YAML-compativel): {exc}") from exc
+
+
+def _extract_rule_ids_from_thematic_file(path: Path) -> set[str]:
+    content = path.read_text(encoding="utf-8")
+    return set(re.findall(r"^\s*-\s*(gr-[a-z0-9\-]+)\s*$", content, flags=re.MULTILINE))
+
+
+def load_thematic_rule_ids() -> dict[str, set[str]]:
+    thematic_rule_ids: dict[str, set[str]] = {}
+    for filename in THEMATIC_FILES:
+        file_path = GUARDRAILS_DIR / filename
+        if not file_path.exists():
+            thematic_rule_ids[filename] = set()
+            continue
+        thematic_rule_ids[filename] = _extract_rule_ids_from_thematic_file(file_path)
+    return thematic_rule_ids
+
+
+def validate_thematic_alignment(policy: dict[str, Any]) -> list[str]:
+    errors: list[str] = []
+    policy_rule_ids = {rule.get("id") for rule in policy.get("rules", []) if isinstance(rule, dict)}
+    policy_rule_ids.discard(None)
+
+    thematic_rule_ids = load_thematic_rule_ids()
+    union_thematic_ids = set().union(*thematic_rule_ids.values()) if thematic_rule_ids else set()
+
+    for filename in THEMATIC_FILES:
+        file_path = GUARDRAILS_DIR / filename
+        if not file_path.exists():
+            errors.append(f"arquivo tematico ausente: guardrails/{filename}")
+            continue
+
+        content = file_path.read_text(encoding="utf-8")
+        if "source_of_truth: policy.yaml" not in content:
+            errors.append(f"source_of_truth ausente em guardrails/{filename}")
+
+    missing_in_thematic = policy_rule_ids - union_thematic_ids
+    if missing_in_thematic:
+        errors.append(f"regras da policy sem mapeamento tematico: {sorted(missing_in_thematic)}")
+
+    unknown_in_thematic = union_thematic_ids - policy_rule_ids
+    if unknown_in_thematic:
+        errors.append(f"regras tematicas inexistentes em policy: {sorted(unknown_in_thematic)}")
+
+    modules = policy.get("modules")
+    if not isinstance(modules, dict):
+        errors.append("campo modules ausente ou invalido em guardrails/policy.yaml")
+        return errors
+
+    missing_module_files = set(THEMATIC_FILES) - set(modules.keys())
+    if missing_module_files:
+        errors.append(f"modules sem arquivos tematicos obrigatorios: {sorted(missing_module_files)}")
+
+    extra_module_files = set(modules.keys()) - set(THEMATIC_FILES)
+    if extra_module_files:
+        errors.append(f"modules com arquivos nao reconhecidos: {sorted(extra_module_files)}")
+
+    for filename in THEMATIC_FILES:
+        module_ids = modules.get(filename, [])
+        if not isinstance(module_ids, list):
+            errors.append(f"modules[{filename}] deve ser lista")
+            continue
+        module_id_set = set(module_ids)
+        thematic_id_set = thematic_rule_ids.get(filename, set())
+        if module_id_set != thematic_id_set:
+            errors.append(
+                f"divergencia entre policy.modules e guardrails/{filename}: "
+                f"modules={sorted(module_id_set)} thematic={sorted(thematic_id_set)}"
+            )
+
+    return errors
 
 
 def _contains_bncc_code(text: str) -> bool:
@@ -150,6 +232,7 @@ def validate_policy_schema(policy: dict[str, Any]) -> list[str]:
 def main() -> int:
     policy = load_policy()
     errors = validate_policy_schema(policy)
+    errors.extend(validate_thematic_alignment(policy))
 
     if errors:
         print("ERRO: politica de guardrails invalida")

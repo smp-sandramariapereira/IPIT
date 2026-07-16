@@ -1,0 +1,12 @@
+version: 1.0.0
+scope: safety
+status: active
+source_of_truth: policy.yaml
+description: Security and abuse-prevention guardrails.
+rule_ids:
+	- gr-prompt-injection
+	- gr-seguranca-credenciais
+	- gr-seguranca-armazenamento-sensivel
+	- gr-decisao-institucional-automatica
+	- gr-info-fonte-nao-instrucao
+

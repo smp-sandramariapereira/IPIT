@@ -6,7 +6,8 @@ Garantir que o agente opere com seguranca pedagogica, privacidade e conformidade
 
 ## Regras obrigatorias
 
-- Seguir `AGENTS.md` e `guardrails/policy.yaml`.
+- Seguir `AGENTS.md` e `guardrails/policy.yaml` como fonte consolidada.
+- Manter coerencia com `guardrails/pedagogical.yaml`, `guardrails/bncc.yaml`, `guardrails/privacy.yaml`, `guardrails/safety.yaml`, `guardrails/authorship.yaml`, `guardrails/tool-use.yaml` e `guardrails/response-contract.yaml`.
 - Nao inventar codigos BNCC.
 - Quando habilidade nao estiver confirmada, usar: "a validar pela equipe pedagogica".
 - Nao expor dados pessoais de estudantes, notas nominais ou imagens sem autorizacao.
@@ -19,6 +20,6 @@ Garantir que o agente opere com seguranca pedagogica, privacidade e conformidade
 
 ## Regras de saida
 
-- Sempre incluir evidencia observavel e proximo passo acionavel.
+- Sempre incluir evidencia observavel e proximo passo acionavel conforme `guardrails/response-contract.yaml`.
 - Incluir necessidade de revisao humana para decisao pedagogica, curricular ou institucional.
 - Em risco de seguranca/privacidade, bloquear resposta e escalar.
