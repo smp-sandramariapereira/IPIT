@@ -1,6 +1,8 @@
-import re
 from collections import Counter, deque
 from pathlib import Path
+from typing import Any
+
+import yaml
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -31,116 +33,118 @@ EXTERNAL_EVIDENCE = {
 }
 
 
-def available_skill_names():
+def load_yaml_mapping(path: Path) -> dict[str, Any]:
+    try:
+        loaded = yaml.safe_load(path.read_text(encoding="utf-8"))
+    except yaml.YAMLError as exc:
+        raise AssertionError(f"YAML invalido em {path.relative_to(ROOT)}: {exc}") from exc
+
+    assert isinstance(loaded, dict), (
+        f"Documento YAML deve ser um objeto em {path.relative_to(ROOT)}"
+    )
+    return loaded
+
+
+def available_skill_names() -> set[str]:
     return {path.parent.name for path in SKILLS_DIR.glob("*/SKILL.md")}
 
 
-def parse_catalog_entries():
-    content = CATALOG_PATH.read_text(encoding="utf-8").splitlines()
-    entries = []
-    current = None
-    in_dep_block = False
+def parse_catalog_entries() -> list[dict[str, Any]]:
+    catalog = load_yaml_mapping(CATALOG_PATH)
+    entries = catalog.get("skills")
+    assert isinstance(entries, list), "skills deve ser uma lista em skills/catalog.yaml"
 
-    for line in content:
-        name_match = re.match(r"^  - name:\s*(\S+)\s*$", line)
-        if name_match:
-            current = {"name": name_match.group(1), "path": None, "depends_on": []}
-            entries.append(current)
-            in_dep_block = False
-            continue
-
-        if current is None:
-            continue
-
-        path_match = re.match(r"^\s{4}path:\s*(\S+)\s*$", line)
-        if path_match:
-            current["path"] = path_match.group(1)
-            in_dep_block = False
-            continue
-
-        if re.match(r"^\s{4}depends_on:\s*\[\]\s*$", line):
-            current["depends_on"] = []
-            in_dep_block = False
-            continue
-
-        if re.match(r"^\s{4}depends_on:\s*$", line):
-            current["depends_on"] = []
-            in_dep_block = True
-            continue
-
-        if in_dep_block:
-            dep_match = re.match(r"^\s{6}-\s*(\S+)\s*$", line)
-            if dep_match:
-                current["depends_on"].append(dep_match.group(1))
-                continue
-            in_dep_block = False
-
-    return entries
+    normalized: list[dict[str, Any]] = []
+    for index, entry in enumerate(entries, start=1):
+        assert isinstance(entry, dict), f"Entrada #{index} do catalogo deve ser objeto"
+        name = entry.get("name")
+        path = entry.get("path")
+        dependencies = entry.get("depends_on", [])
+        assert isinstance(name, str) and name, f"Entrada #{index} sem name valido"
+        assert isinstance(path, str) and path, f"Skill {name} sem path valido"
+        assert isinstance(dependencies, list), f"depends_on de {name} deve ser lista"
+        assert all(isinstance(dep, str) and dep for dep in dependencies), (
+            f"depends_on de {name} contem valor invalido"
+        )
+        normalized.append(
+            {"name": name, "path": path, "depends_on": list(dependencies)}
+        )
+    return normalized
 
 
-def catalog_graph():
+def catalog_graph() -> dict[str, list[str]]:
     return {entry["name"]: list(entry["depends_on"]) for entry in parse_catalog_entries()}
 
 
-def extract_frontmatter(content):
+def extract_frontmatter_text(content: str, skill_file: Path) -> str:
     normalized = content.replace("\r\n", "\n")
-    match = re.match(r"^---\n(.*?)\n---(?:\n|$)", normalized, flags=re.DOTALL)
-    assert match, "Frontmatter YAML ausente"
-    return match.group(1)
+    lines = normalized.splitlines()
+    assert lines and lines[0] == "---", (
+        f"Frontmatter YAML ausente em {skill_file.relative_to(ROOT)}"
+    )
+    try:
+        end = lines.index("---", 1)
+    except ValueError as exc:
+        raise AssertionError(
+            f"Delimitador final do frontmatter ausente em {skill_file.relative_to(ROOT)}"
+        ) from exc
+    return "\n".join(lines[1:end])
 
 
-def parse_frontmatter_list(skill_file: Path, key: str):
-    frontmatter = extract_frontmatter(skill_file.read_text(encoding="utf-8"))
-    values = []
-    in_block = False
+def load_skill_frontmatter(skill_file: Path) -> dict[str, Any]:
+    frontmatter_text = extract_frontmatter_text(
+        skill_file.read_text(encoding="utf-8"), skill_file
+    )
+    try:
+        loaded = yaml.safe_load(frontmatter_text)
+    except yaml.YAMLError as exc:
+        raise AssertionError(
+            f"Frontmatter YAML invalido em {skill_file.relative_to(ROOT)}: {exc}"
+        ) from exc
 
-    for line in frontmatter.splitlines():
-        if re.match(rf"^\s*{re.escape(key)}:\s*\[\]\s*$", line):
-            return []
-
-        if re.match(rf"^\s*{re.escape(key)}:\s*$", line):
-            in_block = True
-            values = []
-            continue
-
-        if in_block:
-            value_match = re.match(r"^\s+-\s*(\S+)\s*$", line)
-            if value_match:
-                values.append(value_match.group(1))
-                continue
-
-            if re.match(r"^\s*[a-zA-Z0-9_-]+:\s*", line):
-                break
-
-    return values
+    assert isinstance(loaded, dict), (
+        f"Frontmatter deve ser objeto em {skill_file.relative_to(ROOT)}"
+    )
+    return loaded
 
 
-def parse_frontmatter_dependencies(skill_file: Path):
-    return parse_frontmatter_list(skill_file, "depends-on")
+def metadata_list(frontmatter: dict[str, Any], skill_name: str, key: str) -> list[str]:
+    metadata = frontmatter.get("metadata")
+    assert isinstance(metadata, dict), f"metadata ausente ou invalido em {skill_name}"
+    values = metadata.get(key)
+    assert isinstance(values, list), f"metadata.{key} deve ser lista em {skill_name}"
+    assert all(isinstance(value, str) and value for value in values), (
+        f"metadata.{key} contem valor invalido em {skill_name}"
+    )
+    return list(values)
 
 
-def skill_contracts():
-    contracts = {}
+def skill_contracts() -> dict[str, dict[str, list[str]]]:
+    contracts: dict[str, dict[str, list[str]]] = {}
     for skill_file in SKILLS_DIR.glob("*/SKILL.md"):
         skill_name = skill_file.parent.name
+        frontmatter = load_skill_frontmatter(skill_file)
+        declared_name = frontmatter.get("name")
+        assert declared_name == skill_name, (
+            f"name do frontmatter diverge da pasta: {declared_name!r} != {skill_name!r}"
+        )
         contracts[skill_name] = {
-            "depends_on": parse_frontmatter_list(skill_file, "depends-on"),
-            "required_evidence": parse_frontmatter_list(
-                skill_file, "required-evidence"
+            "depends_on": metadata_list(frontmatter, skill_name, "depends-on"),
+            "required_evidence": metadata_list(
+                frontmatter, skill_name, "required-evidence"
             ),
-            "produces": parse_frontmatter_list(skill_file, "produces"),
+            "produces": metadata_list(frontmatter, skill_name, "produces"),
         }
     return contracts
 
 
-def find_cycle(graph):
+def find_cycle(graph: dict[str, list[str]]) -> list[str] | None:
     state = {name: 0 for name in graph}
-    stack = []
+    stack: list[str] = []
 
-    def visit(node):
+    def visit(node: str) -> list[str] | None:
         state[node] = 1
         stack.append(node)
-
         for dependency in graph[node]:
             if state[dependency] == 0:
                 cycle = visit(dependency)
@@ -149,7 +153,6 @@ def find_cycle(graph):
             elif state[dependency] == 1:
                 start = stack.index(dependency)
                 return stack[start:] + [dependency]
-
         stack.pop()
         state[node] = 2
         return None
@@ -159,17 +162,16 @@ def find_cycle(graph):
             cycle = visit(node)
             if cycle:
                 return cycle
-
     return None
 
 
-def reachable_from_root(graph, root):
+def reachable_from_root(graph: dict[str, list[str]], root: str) -> set[str]:
     dependents = {name: [] for name in graph}
     for skill, dependencies in graph.items():
         for dependency in dependencies:
             dependents[dependency].append(skill)
 
-    visited = set()
+    visited: set[str] = set()
     queue = deque([root])
     while queue:
         current = queue.popleft()
@@ -177,21 +179,18 @@ def reachable_from_root(graph, root):
             continue
         visited.add(current)
         queue.extend(dependents[current])
-
     return visited
 
 
-def ancestor_skills(graph, skill_name):
-    ancestors = set()
+def ancestor_skills(graph: dict[str, list[str]], skill_name: str) -> set[str]:
+    ancestors: set[str] = set()
     stack = list(graph[skill_name])
-
     while stack:
         current = stack.pop()
         if current in ancestors:
             continue
         ancestors.add(current)
         stack.extend(graph[current])
-
     return ancestors
 
 
@@ -205,7 +204,7 @@ def test_catalog_and_workspace_have_same_skills():
     workspace = available_skill_names()
     catalog = set(catalog_graph())
     assert workspace == catalog, (
-        f"Divergencia entre workspace e catalogo. "
+        "Divergencia entre workspace e catalogo. "
         f"somente_workspace={sorted(workspace - catalog)} "
         f"somente_catalogo={sorted(catalog - workspace)}"
     )
@@ -215,7 +214,6 @@ def test_catalog_paths_are_unique_and_valid():
     entries = parse_catalog_entries()
     paths = [entry["path"] for entry in entries]
     duplicates = sorted(path for path, count in Counter(paths).items() if count > 1)
-    assert None not in paths, "Skill sem path declarado no catalogo"
     assert not duplicates, f"Paths duplicados no catalogo: {duplicates}"
 
     for entry in entries:
@@ -230,7 +228,6 @@ def test_catalog_paths_are_unique_and_valid():
 def test_dependency_targets_exist():
     graph = catalog_graph()
     catalog_skills = set(graph)
-
     for skill_name, dependencies in graph.items():
         for dependency in dependencies:
             assert dependency in catalog_skills, (
@@ -245,9 +242,7 @@ def test_dependencies_are_not_duplicated():
             for dependency, count in Counter(dependencies).items()
             if count > 1
         )
-        assert not duplicates, (
-            f"Dependencias duplicadas para {skill_name}: {duplicates}"
-        )
+        assert not duplicates, f"Dependencias duplicadas para {skill_name}: {duplicates}"
 
 
 def test_skills_do_not_depend_on_themselves():
@@ -272,8 +267,7 @@ def test_graph_has_single_expected_root():
 def test_all_skills_are_reachable_from_root():
     graph = catalog_graph()
     assert EXPECTED_ROOT in graph, f"Raiz ausente: {EXPECTED_ROOT}"
-    reachable = reachable_from_root(graph, EXPECTED_ROOT)
-    unreachable = sorted(set(graph) - reachable)
+    unreachable = sorted(set(graph) - reachable_from_root(graph, EXPECTED_ROOT))
     assert not unreachable, (
         f"Skills orfas ou desconectadas da raiz {EXPECTED_ROOT}: {unreachable}"
     )
@@ -287,11 +281,10 @@ def test_catalog_matches_official_ipit_sequence():
         f"catalogo={catalog_sequence} esperada={EXPECTED_SEQUENCE}"
     )
 
-    graph = catalog_graph()
     expected_graph = {EXPECTED_SEQUENCE[0]: []}
     for previous, current in zip(EXPECTED_SEQUENCE, EXPECTED_SEQUENCE[1:]):
         expected_graph[current] = [previous]
-
+    graph = catalog_graph()
     assert graph == expected_graph, (
         "Dependencias do catalogo divergem da sequencia metodologica oficial do IPIT. "
         f"catalogo={graph} esperado={expected_graph}"
@@ -300,11 +293,8 @@ def test_catalog_matches_official_ipit_sequence():
 
 def test_frontmatter_dependency_targets_exist():
     valid_skills = available_skill_names()
-
-    for skill_file in SKILLS_DIR.glob("*/SKILL.md"):
-        skill_name = skill_file.parent.name
-        dependencies = parse_frontmatter_dependencies(skill_file)
-        for dependency in dependencies:
+    for skill_name, contract in skill_contracts().items():
+        for dependency in contract["depends_on"]:
             assert dependency in valid_skills, (
                 f"Dependencia inexistente no frontmatter: {skill_name} -> {dependency}"
             )
@@ -312,14 +302,11 @@ def test_frontmatter_dependency_targets_exist():
 
 def test_catalog_and_frontmatter_dependencies_are_consistent():
     graph = catalog_graph()
-
-    for skill_file in SKILLS_DIR.glob("*/SKILL.md"):
-        skill_name = skill_file.parent.name
+    for skill_name, contract in skill_contracts().items():
         assert skill_name in graph, f"Skill ausente no catalogo: {skill_name}"
-        frontmatter_dependencies = parse_frontmatter_dependencies(skill_file)
-        assert frontmatter_dependencies == graph[skill_name], (
+        assert contract["depends_on"] == graph[skill_name], (
             f"Dependencias divergentes ou fora de ordem para {skill_name}. "
-            f"frontmatter={frontmatter_dependencies} catalogo={graph[skill_name]}"
+            f"frontmatter={contract['depends_on']} catalogo={graph[skill_name]}"
         )
 
 
@@ -338,7 +325,6 @@ def test_evidence_contracts_have_no_duplicates():
 def test_required_evidence_is_available_from_ancestors_or_external_inputs():
     graph = catalog_graph()
     contracts = skill_contracts()
-
     for skill_name, contract in contracts.items():
         available = set(EXTERNAL_EVIDENCE)
         for ancestor in ancestor_skills(graph, skill_name):
@@ -354,7 +340,6 @@ def test_required_evidence_is_available_from_ancestors_or_external_inputs():
 def test_each_dependency_edge_has_direct_semantic_handoff():
     graph = catalog_graph()
     contracts = skill_contracts()
-
     for skill_name, dependencies in graph.items():
         required = set(contracts[skill_name]["required_evidence"])
         for dependency in dependencies:
