@@ -7,6 +7,19 @@ ROOT = Path(__file__).resolve().parents[1]
 SKILLS_DIR = ROOT / "skills"
 CATALOG_PATH = SKILLS_DIR / "catalog.yaml"
 EXPECTED_ROOT = "identificar-persona"
+EXPECTED_SEQUENCE = [
+    "identificar-persona",
+    "orquestrar-ipit",
+    "iniciar-ideathon",
+    "conduzir-descoberta",
+    "conduzir-ideacao",
+    "desenhar-solucao",
+    "selecionar-tecnologia",
+    "definir-mvp",
+    "planejar-arquitetura",
+    "acompanhar-desenvolvimento",
+    "preparar-pitch",
+]
 
 
 def available_skill_names():
@@ -222,6 +235,25 @@ def test_all_skills_are_reachable_from_root():
     unreachable = sorted(set(graph) - reachable)
     assert not unreachable, (
         f"Skills orfas ou desconectadas da raiz {EXPECTED_ROOT}: {unreachable}"
+    )
+
+
+def test_catalog_matches_official_ipit_sequence():
+    entries = parse_catalog_entries()
+    catalog_sequence = [entry["name"] for entry in entries]
+    assert catalog_sequence == EXPECTED_SEQUENCE, (
+        "Sequencia do catalogo diverge da jornada metodologica oficial do IPIT. "
+        f"catalogo={catalog_sequence} esperada={EXPECTED_SEQUENCE}"
+    )
+
+    graph = catalog_graph()
+    expected_graph = {EXPECTED_SEQUENCE[0]: []}
+    for previous, current in zip(EXPECTED_SEQUENCE, EXPECTED_SEQUENCE[1:]):
+        expected_graph[current] = [previous]
+
+    assert graph == expected_graph, (
+        "Dependencias do catalogo divergem da sequencia metodologica oficial do IPIT. "
+        f"catalogo={graph} esperado={expected_graph}"
     )
 
 
