@@ -1,0 +1,70 @@
+IPIT — IDEATHON PEDAGÓGICO DE INOVAÇÃO TECNOLÓGICA
+AVISO DE LICENCIAMENTO DUPLO
+
+Copyright (c) 2026 Sandra Maria Pereira
+
+Este repositório contém conteúdo educacional e código de software. Salvo
+indicação expressa em contrário, aplicam-se as licenças abaixo.
+
+1. CONTEÚDO EDUCACIONAL E EDITORIAL — CC BY 4.0
+
+Textos, diagramas, modelos pedagógicos, templates, documentação, orientações,
+materiais didáticos e demais conteúdos educacionais ou editoriais, em qualquer
+arquivo deste repositório, estão licenciados sob a Creative Commons Atribuição
+4.0 Internacional (CC BY 4.0).
+
+Você pode compartilhar e adaptar esse conteúdo, inclusive para fins comerciais,
+desde que atribua o devido crédito, forneça um link para a licença e indique se
+foram realizadas alterações. A atribuição não deve sugerir endosso da autora.
+
+Texto oficial da licença:
+https://creativecommons.org/licenses/by/4.0/legalcode.pt
+
+Resumo legível:
+https://creativecommons.org/licenses/by/4.0/deed.pt-br
+
+Atribuição recomendada:
+
+"IPIT — Ideathon Pedagógico de Inovação Tecnológica, de Sandra Maria Pereira,
+licenciado sob CC BY 4.0."
+
+Identificador SPDX: CC-BY-4.0
+
+2. CÓDIGO-FONTE E IMPLEMENTAÇÃO TÉCNICA — MIT
+
+O código-fonte e a implementação técnica do site, incluindo estruturas de
+software, folhas de estilo e scripts, estão licenciados sob a Licença MIT.
+
+MIT License
+
+Copyright (c) 2026 Sandra Maria Pereira
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+Identificador SPDX: MIT
+
+3. CONTEÚDO DE TERCEIROS
+
+Materiais de terceiros, quando existentes, permanecem sujeitos às respectivas
+licenças e direitos. Este aviso não concede direitos sobre marcas, imagens,
+dados ou outros materiais que não pertençam à autora.
+
+Em caso de dúvida sobre o enquadramento de um elemento, considere sua natureza:
+o conteúdo pedagógico ou editorial utiliza CC BY 4.0; o código e a implementação
+técnica utilizam MIT.
