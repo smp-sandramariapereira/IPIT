@@ -1,0 +1,33 @@
+name: Dúvida sobre aplicação
+description: Peça orientação para adaptar ou aplicar o IPIT.
+title: "[Dúvida] "
+labels: ["dúvida"]
+body:
+  - type: markdown
+    attributes:
+      value: "Não inclua dados pessoais de estudantes."
+  - type: dropdown
+    id: formato
+    attributes:
+      label: Formato pretendido
+      options:
+        - Micro-Ideathon
+        - Oito encontros
+        - Projeto bimestral ou trimestral
+        - Programa institucional
+        - Ainda não definido
+    validations:
+      required: true
+  - type: textarea
+    id: contexto
+    attributes:
+      label: Contexto
+      description: Informe etapa de ensino, área, tempo e infraestrutura sem identificar estudantes.
+    validations:
+      required: true
+  - type: textarea
+    id: duvida
+    attributes:
+      label: Dúvida
+    validations:
+      required: true

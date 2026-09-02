@@ -1,0 +1,55 @@
+name: Relato de aplicação
+description: Compartilhe uma aplicação do IPIT em sua escola.
+title: "[Relato] "
+labels: ["relato de aplicação"]
+body:
+  - type: markdown
+    attributes:
+      value: "Compartilhe somente informações autorizadas, anônimas e sem dados pessoais de estudantes."
+  - type: input
+    id: contexto
+    attributes:
+      label: Contexto educacional
+      placeholder: "Ex.: Ensino Médio, curso técnico ou formação docente"
+    validations:
+      required: true
+  - type: dropdown
+    id: formato
+    attributes:
+      label: Formato utilizado
+      options:
+        - Micro-Ideathon
+        - Oito encontros
+        - Projeto bimestral ou trimestral
+        - Programa institucional
+        - Outro
+    validations:
+      required: true
+  - type: textarea
+    id: adaptacoes
+    attributes:
+      label: Adaptações realizadas
+    validations:
+      required: true
+  - type: textarea
+    id: evidencias
+    attributes:
+      label: Evidências e aprendizados
+      description: Descreva resultados observados sem identificar estudantes.
+    validations:
+      required: true
+  - type: textarea
+    id: dificuldades
+    attributes:
+      label: Dificuldades e próximos passos
+    validations:
+      required: true
+  - type: checkboxes
+    id: consentimento
+    attributes:
+      label: Confirmações
+      options:
+        - label: Não incluí dados pessoais ou materiais sem autorização.
+          required: true
+        - label: Concordo com a publicação deste relato sob CC BY 4.0.
+          required: true

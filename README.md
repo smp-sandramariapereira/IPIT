@@ -4,6 +4,16 @@ Metodologia educacional criada por **Sandra Maria Pereira** para orientar profes
 
 O IPIT integra investigação, aprendizagem baseada em projetos, Design Thinking, cultura maker, metodologias ágeis, documentação no GitHub, prototipagem e uso responsável de Inteligência Artificial. O foco não está apenas no produto final: cada etapa produz decisões, entregáveis e evidências de aprendizagem.
 
+## Aplique em 4 horas
+
+Para uma primeira experiência, realize um **Micro-Ideathon** em um turno:
+
+1. [Baixe o kit completo](downloads/README.md).
+2. Prepare a atividade com o [guia de facilitação docente](docs/guia-facilitacao-docente.md).
+3. Consulte o [exemplo fictício preenchido](exemplos/micro-ideathon-exemplo-ficticio/README.md).
+
+**Tempo:** 3 a 4 horas · **Equipes:** 3 a 5 estudantes · **Resultado:** protótipo de baixa fidelidade e pitch curto.
+
 ## Princípios
 
 - partir de problemas autênticos da escola, do território ou da comunidade;
@@ -59,13 +69,22 @@ A [rubrica resumida](kit-gratuito/05-rubrica-resumida.md) organiza quatro nívei
 
 ## Como começar
 
-1. Leia [O que é o IPIT?](docs/o-que-e-o-ipit.md).
-2. Consulte o [checklist inicial](kit-gratuito/01-checklist-inicial.md).
-3. Escolha um formato de aplicação adequado ao contexto.
-4. Defina objetivos de aprendizagem, evidências e critérios de avaliação.
-5. Utilize o [canvas do problema](kit-gratuito/02-canvas-problema.md) e o [canvas da proposta de valor](kit-gratuito/03-canvas-proposta-de-valor.md).
-6. Planeje a apresentação com o [roteiro de pitch](kit-gratuito/04-roteiro-pitch.md).
-7. Adote as orientações para o [uso responsável de IA](kit-gratuito/07-guia-uso-responsavel-ia.md).
+1. Preencha o [plano de aplicação](docs/plano-de-aplicacao.md) e o [checklist inicial](kit-gratuito/01-checklist-inicial.md).
+2. Escolha um formato adequado ao tempo, à infraestrutura e ao currículo.
+3. Apresente objetivos, entregáveis e critérios aos estudantes.
+4. Utilize os canvases para investigar o problema e elaborar a proposta.
+5. Conduza prototipagem, pitch, feedback e retrospectiva.
+6. Registre adaptações e evidências sem expor dados pessoais.
+
+O [guia de facilitação](docs/guia-facilitacao-docente.md) oferece falas sugeridas, perguntas orientadoras, estratégias de inclusão e respostas para situações frequentes.
+
+## Downloads
+
+| Arquivo | Uso recomendado |
+|---|---|
+| [Kit para impressão — PDF](downloads/Kit-IPIT-Professor-Impressao.pdf) | imprimir ou consultar durante a aplicação |
+| [Kit completo editável — DOCX](downloads/Kit-IPIT-Professor-Editavel.docx) | adaptar textos e formulários no Word ou LibreOffice |
+| [Pacote completo — ZIP](downloads/Kit-IPIT-Professor.zip) | obter kit, arquivos editáveis e exemplo em um único download |
 
 ## Estrutura do repositório
 
@@ -74,6 +93,8 @@ A [rubrica resumida](kit-gratuito/05-rubrica-resumida.md) organiza quatro nívei
 | `docs/` | fundamentos, metodologia, etapas, avaliação, formatos e estudo de caso |
 | `kit-gratuito/` | recursos para planejar e conduzir um Micro-Ideathon |
 | `templates/` | modelos editáveis para documentação das equipes |
+| `exemplos/` | aplicação fictícia preenchida para orientar professores |
+| `downloads/` | versões em PDF, DOCX e pacote ZIP |
 | `index.html` e `guia.html` | páginas do site e do guia prático |
 | `styles.css` e `script.js` | apresentação visual e comportamento do site |
 
@@ -104,3 +125,9 @@ Este repositório utiliza licenciamento duplo:
 Ao reutilizar os materiais educacionais, atribua a autoria a **Sandra Maria Pereira** e indique o IPIT como obra de origem. Consulte o arquivo [LICENSE](LICENSE) para os termos completos e a delimitação das licenças.
 
 Materiais de terceiros, quando existentes, permanecem sujeitos às respectivas licenças e direitos.
+
+## Comunidade e contribuições
+
+Professores podem abrir uma Issue para tirar dúvidas ou compartilhar uma aplicação, sempre sem dados pessoais de estudantes. Consulte [`CONTRIBUTING.md`](CONTRIBUTING.md).
+
+Versão atual: **1.0.0**. Consulte o [`CHANGELOG.md`](CHANGELOG.md) e os metadados em [`CITATION.cff`](CITATION.cff).

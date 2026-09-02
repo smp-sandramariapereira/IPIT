@@ -41,7 +41,11 @@ flowchart LR
 
 ## ⚖️ Condições de uso
 
-Este material pode ser utilizado para fins educacionais com atribuição de autoria. Não é permitida a revenda, redistribuição comercial ou remoção dos créditos sem autorização da autora.
+Este material está licenciado sob **Creative Commons Atribuição 4.0 Internacional (CC BY 4.0)**. Ele pode ser compartilhado e adaptado, inclusive para fins comerciais, desde que a autoria seja atribuída, a licença seja indicada e eventuais alterações sejam informadas. Consulte o arquivo [`LICENSE`](../LICENSE).
+
+Atribuição recomendada:
+
+> IPIT — Ideathon Pedagógico de Inovação Tecnológica, de Sandra Maria Pereira, licenciado sob CC BY 4.0.
 
 ## ✍️ Autoria
 
@@ -52,4 +56,4 @@ Professora do Curso Técnico em Informática
 
 ---
 
-> 🌱 O kit gratuito é uma porta de entrada. A implementação completa do IPIT pode incluir formação docente, mentoria, instrumentos editáveis e apoio institucional.
+> 🌱 O kit gratuito é uma porta de entrada. Para começar, consulte também o [guia de facilitação docente](../docs/guia-facilitacao-docente.md), o [exemplo fictício preenchido](../exemplos/micro-ideathon-exemplo-ficticio/README.md) e os [arquivos para download](../downloads/README.md).

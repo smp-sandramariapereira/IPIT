@@ -1,0 +1,6 @@
+__pycache__/
+*.py[cod]
+qa/
+soffice_convert_*/
+soffice_profile_*/
+

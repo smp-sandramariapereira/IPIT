@@ -463,7 +463,7 @@ A metodologia foi estruturada a partir de uma experiência desenvolvida com estu
 
 - Consulte [O que é o IPIT?](o-que-e-o-ipit.md)
 - Acesse a [metodologia completa](metodologia.md)
-- Conheça os materiais em `recursos-gratuitos/`
+- Conheça os materiais em [`kit-gratuito/`](../kit-gratuito/README.md)
 - Consulte o estudo de caso da experiência de origem
 
 ---

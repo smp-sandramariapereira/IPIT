@@ -238,5 +238,5 @@ A metodologia reúne experiência docente, integração curricular, aprendizagem
 
 - 📘 Consulte a [metodologia completa](metodologia.md).
 - 🧭 Conheça as [oito etapas do IPIT](metodologia.md#como-a-metodologia-funciona).
-- 🎁 Veja os materiais disponíveis em `recursos-gratuitos/`.
+- 🎁 Veja os materiais disponíveis em [`kit-gratuito/`](../kit-gratuito/README.md).
 - 🏫 Consulte o estudo de caso da experiência de origem.

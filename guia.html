@@ -14,7 +14,7 @@
     <div class="container header-content">
       <a class="brand" href="index.html" aria-label="IPIT — voltar à página institucional"><span class="brand-mark" aria-hidden="true">IP</span><span>IPIT</span></a>
       <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="menu-principal"><span aria-hidden="true">☰</span><span>Menu</span></button>
-      <nav id="menu-principal" aria-label="Navegação do guia"><a href="#percurso">Percurso</a><a href="#recursos">Recursos</a><a href="#cuidados">Cuidados</a><a class="nav-cta" href="index.html">Página institucional</a></nav>
+      <nav id="menu-principal" aria-label="Navegação do guia"><a href="#percurso">Percurso</a><a href="#downloads">Downloads</a><a href="#recursos">Recursos</a><a href="#cuidados">Cuidados</a><a class="nav-cta" href="index.html">Página institucional</a></nav>
     </div>
   </header>
 
@@ -25,9 +25,16 @@
           <p class="eyebrow">Material gratuito para educadores</p>
           <h1>Guia Prático IPIT</h1>
           <p class="hero-text">Um conjunto de recursos para planejar, conduzir e avaliar um primeiro Micro-Ideathon com clareza metodológica, autoria estudantil e segurança pedagógica.</p>
-          <a class="button button-primary" href="#recursos">Explorar os recursos</a>
+          <div class="hero-actions"><a class="button button-primary" href="downloads/Kit-IPIT-Professor.zip" download>Baixar kit completo</a><a class="button button-secondary" href="#recursos">Explorar recursos</a></div>
         </div>
         <aside class="guide-summary" aria-label="Resumo do guia"><strong>Aplicação sugerida</strong><dl><div><dt>Duração</dt><dd>3 a 4 horas</dd></div><div><dt>Equipes</dt><dd>3 a 5 estudantes</dd></div><div><dt>Resultado</dt><dd>Protótipo de baixa fidelidade</dd></div><div><dt>Apresentação</dt><dd>Pitch de 3 minutos</dd></div></dl></aside>
+      </div>
+    </section>
+
+    <section class="download-section" id="downloads" aria-labelledby="downloads-titulo">
+      <div class="container download-panel">
+        <div><p class="eyebrow">Escolha o formato</p><h2 id="downloads-titulo">Materiais prontos para usar</h2><p>Não é necessário conhecer GitHub ou Markdown. Use o PDF para imprimir, o DOCX para adaptar ou o ZIP para obter todos os arquivos.</p></div>
+        <div class="download-actions"><a href="downloads/Kit-IPIT-Professor-Impressao.pdf"><strong>PDF para impressão</strong><span>Abrir material consolidado</span></a><a href="downloads/Kit-IPIT-Professor-Editavel.docx"><strong>DOCX editável</strong><span>Adaptar no Word ou LibreOffice</span></a><a href="downloads/Kit-IPIT-Professor.zip" download><strong>Pacote ZIP</strong><span>Baixar kit e exemplo completo</span></a></div>
       </div>
     </section>
 
@@ -37,6 +44,8 @@
         <ol class="guide-steps"><li><span>01</span><strong>Preparar</strong><small>contexto, objetivos e condições</small></li><li><span>02</span><strong>Investigar</strong><small>problema, público e evidências</small></li><li><span>03</span><strong>Idear</strong><small>alternativas e priorização</small></li><li><span>04</span><strong>Prototipar</strong><small>fluxo e benefício principal</small></li><li><span>05</span><strong>Apresentar</strong><small>pitch, limites e próximos passos</small></li><li><span>06</span><strong>Avaliar</strong><small>evidências e feedback formativo</small></li></ol>
       </div>
     </section>
+
+    <section class="example-section" aria-labelledby="exemplo-titulo"><div class="container example-band"><div><p class="eyebrow">Veja antes de aplicar</p><h2 id="exemplo-titulo">Um Micro-Ideathon completamente preenchido</h2><p>O exemplo fictício CompartilhaEsporte mostra a relação entre problema, proposta, protótipo, pitch, rubrica e retrospectiva, sem utilizar dados reais de estudantes.</p></div><a class="button button-primary" href="exemplos/micro-ideathon-exemplo-ficticio/README.md">Abrir exemplo fictício</a></div></section>
 
     <section class="section tinted" id="recursos" aria-labelledby="recursos-titulo">
       <div class="container">
@@ -60,9 +69,9 @@
       </div>
     </section>
 
-    <section class="section guide-cta" aria-labelledby="proximo-passo-titulo"><div class="container"><p class="eyebrow">Próximo passo</p><h2 id="proximo-passo-titulo">Comece pelo checklist</h2><p>Registre objetivos, tempo, infraestrutura, formas de participação, critérios de avaliação e validações necessárias antes de definir o desafio da turma.</p><a class="button button-primary" href="index.html">Voltar à página institucional</a><p class="review-note">A aplicação e o alinhamento curricular exigem revisão humana registrada pela equipe pedagógica. Habilidades BNCC: a validar pela equipe pedagogica.</p></div></section>
+    <section class="section guide-cta" aria-labelledby="proximo-passo-titulo"><div class="container"><p class="eyebrow">Próximo passo</p><h2 id="proximo-passo-titulo">Comece pelo plano de aplicação</h2><p>Defina objetivos, tempo, infraestrutura, formas de participação, evidências e critérios antes de apresentar o desafio à turma.</p><div class="hero-actions"><a class="button button-primary" href="docs/plano-de-aplicacao.md">Abrir plano</a><a class="button button-secondary" href="docs/guia-facilitacao-docente.md">Guia de facilitação</a></div><p class="review-note">A aplicação e o alinhamento curricular exigem revisão humana registrada pela equipe pedagógica. Habilidades da BNCC devem ser validadas conforme etapa de ensino, currículo local e PPP.</p></div></section>
   </main>
 
-  <footer class="site-footer"><div class="container footer-content"><div><strong>Guia Prático IPIT</strong><p>Recursos gratuitos para educadores.</p></div><p>Metodologia criada por <strong>Sandra Maria Pereira</strong>.</p><p>Uso educacional com atribuição de autoria.</p></div></footer>
+  <footer class="site-footer"><div class="container footer-content"><div><strong>Guia Prático IPIT</strong><p>Recursos gratuitos para educadores.</p></div><p>Metodologia criada por <strong>Sandra Maria Pereira</strong>.</p><p>Conteúdo CC BY 4.0 · Código MIT</p></div></footer>
 </body>
 </html>

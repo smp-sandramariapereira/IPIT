@@ -1,0 +1,16 @@
+cff-version: 1.2.0
+message: "Se você utilizar o IPIT, cite esta metodologia e a autora."
+title: "IPIT — Ideathon Pedagógico de Inovação Tecnológica"
+type: software
+authors:
+  - family-names: "Pereira"
+    given-names: "Sandra Maria"
+repository-code: "https://github.com/smp-sandramariapereira/IPIT-IdeathonPedagogicoInovacaoTecnologica"
+url: "https://smp-sandramariapereira.github.io/IPIT-IdeathonPedagogicoInovacaoTecnologica/"
+version: "1.0.0"
+date-released: "2026-09-02"
+license: "CC-BY-4.0 AND MIT"
+abstract: >-
+  Metodologia educacional para transformar problemas reais em projetos
+  tecnológicos com autoria estudantil, avaliação por evidências e uso
+  responsável de Inteligência Artificial.
