@@ -1,7 +1,0 @@
-version: 1.0.0
-scope: bncc
-status: active
-source_of_truth: policy.yaml
-description: BNCC validation and compliance guardrails.
-rule_ids:
-  - gr-bncc-codigo-nao-verificado
